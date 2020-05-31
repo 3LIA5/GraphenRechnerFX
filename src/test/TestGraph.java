@@ -135,9 +135,22 @@ public class TestGraph
 		gr.berechneDistanzmatrix();
 		System.out.println(gr.getDistanzMatrix());
 		gr.berechneDurchmesserRadiusZentrum();
-//		System.out.println(gr.);
 		gr.berechneWegmatrix();
 		System.out.println(gr.getWegmatrix());
+		try 
+		{
+			System.out.println("Test: exp_csv");
+//			gr.exportAdjazensmatirxCsv("C:\\scratch\\test.csv");
+			gr.exportAdjazensmatirxCsv("java.io.tmpdir");
+			System.out.println("Test: imp_csv");
+//			gr.importMatrixCsv("C:\\scratch\\test.csv",",");
+			gr.importMatrixCsv("java.io.tmpdir", ",");
+			System.out.println(gr.getAdjazensmatirx());
+		} 
+		catch (GraphenRechnerException e) 
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 
 

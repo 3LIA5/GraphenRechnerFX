@@ -50,7 +50,7 @@ public class RootBorderPane extends BorderPane
 		miNeu.setDisable(true);
 		miLaden.setDisable(true);
 		miSpeichern.setDisable(true);
-		miImportieren.setDisable(true);
+		miImportieren.setDisable(false);
 		miExportieren.setDisable(true);
 		miBeenden.setDisable(false);
 		
@@ -97,6 +97,7 @@ public class RootBorderPane extends BorderPane
 	}
 	private void addHandlers()
 	{
+		miImportieren.setOnAction(event -> importAdjazensmatrixCsv());
 		miAdjazensmatrixAnsicht.setOnAction(event -> ansichtMatrix(graph.getAdjazensmatirx().getMatrix()));
 		miDistanzmatrixAnsicht.setOnAction(event -> ansichtMatrix(graph.getDistanzMatrix().getMatrix()));
 		miWegmatrixAnsicht.setOnAction(event -> ansichtMatrix(graph.getWegmatrix().getMatrix()));
@@ -118,29 +119,27 @@ public class RootBorderPane extends BorderPane
 	{
 		graph.berechneDistanzmatrix();
 	}
-	//	private void laden()
-//	{
-//		FileChooser fc = new FileChooser();
-//		fc.setInitialDirectory(new File("c:\\scratch"));
-//		File selected = fc.showOpenDialog(null);  // modal
-//		if (selected != null)
-//		{
-//			try
-//			{
-//				graph.loadMitarbeiter(selected.getAbsolutePath());
-////				System.out.println(graph);  // zum Testen
-//				List<Mitarbeiter> mitarbeiter = graph.getMitarbeiter();
-//				uebersicht.updateAndShow(mitarbeiter);
-//			}
-//			catch (MitarbeiterException e)
-//			{
-//				Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
-//			}
-//		}
-//		else
-//			Main.showAlert(AlertType.INFORMATION, "Benutzer-Abbruch");
-//	}
-	// toDo
+	private void importAdjazensmatrixCsv()
+	{
+		FileChooser fc = new FileChooser();
+		fc.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
+		File selected = fc.showOpenDialog(null);  // modal
+		if (selected != null)
+		{
+			try
+			{
+				graph.importMatrixCsv(selected.getAbsolutePath(),",");
+				uebersicht.updateAndShow(graph.getAdjazensmatirx().getMatrix());
+//				disableComponents(false);
+			}
+			catch (GraphenRechnerException e)
+			{
+				Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+			}
+		}
+		else
+			Main.showAlert(AlertType.INFORMATION, "Benutzer-Abbruch");
+	}
 	
 	private void speichern() // handler-Methode
 	{

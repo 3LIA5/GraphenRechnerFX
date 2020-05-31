@@ -1,4 +1,6 @@
 package test;
+import java.io.Console;
+
 import model.*;
 
 public class TestMatrix 
@@ -109,7 +111,9 @@ public class TestMatrix
 			};
 		Matrix ma = new Matrix(matrix);
 		System.out.println(ma);
-		System.out.println(ma.toStringCsv());	
+//		System.out.println(ma.toStringCsv());
+		System.out.println(ma.toStringCsv());
+
 
 	}
 

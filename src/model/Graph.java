@@ -1,6 +1,9 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -144,6 +147,7 @@ public class Graph
 			}
 	}
 	
+
 	public void exportAdjazensmatirxCsv(String filename) throws GraphenRechnerException
 	{
 		if (filename != null)
@@ -162,5 +166,46 @@ public class Graph
 		}
 		else
 			throw new GraphenRechnerException("null-Ref für loadMitarbeiter(String filename)");
+	}
+	public void importMatrixCsv(String filename, String delimiter) throws GraphenRechnerException
+	{
+		try (BufferedReader br = new BufferedReader(new FileReader(filename));)
+		{
+			String line;			
+			line = br.readLine();
+			int count = 0;
+			int countVortex = line.length()/2+1;
+			String[] lines = new String[countVortex];
+			while (line != null)
+			{
+				lines[count]=line;
+				line = br.readLine();
+				count++;
+			}
+//			for (String str: lines){System.out.println(' '+str);} //test lines
+			int[][] aMatrix = new int [countVortex][countVortex];
+			int l=0;
+			int c=0;
+			for (String vortex:lines)
+			{
+				c=0;
+				for (String edge: vortex.split(delimiter))
+				{	
+					System.out.println(edge+l+c);
+					aMatrix[l][c]=Integer.parseInt(edge);
+					c++;
+				}
+				l++;
+			}
+			adjazensmatrix = new Matrix(aMatrix);
+		}
+		catch (FileNotFoundException e)
+		{
+			throw new GraphenRechnerException("FileNotFoundException beim Aufbau des FileReades fuer "+filename);
+		}
+		catch (IOException e)
+		{
+			throw new GraphenRechnerException("IOException beim Aufbau des FIS fuer "+filename);
+		}
 	}
 }

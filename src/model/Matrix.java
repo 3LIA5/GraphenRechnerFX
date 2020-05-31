@@ -1,5 +1,6 @@
 package model;
 
+
 public class Matrix 
 {
 	private boolean regulaer;
