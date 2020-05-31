@@ -191,7 +191,7 @@ public class Graph
 				c=0;
 				for (String edge: vortex.split(delimiter))
 				{	
-					System.out.println(edge+l+c);
+//					System.out.println(edge+l+c); show edges
 					aMatrix[l][c]=Integer.parseInt(edge);
 					c++;
 				}
