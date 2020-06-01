@@ -1,8 +1,6 @@
 package application;
 
 import java.io.File;
-import java.util.List;
-
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -141,10 +139,6 @@ public class RootBorderPane extends BorderPane
 			Main.showAlert(AlertType.INFORMATION, "Benutzer-Abbruch");
 	}
 	
-	private void speichern() // handler-Methode
-	{
-		// am Ende des speicherns eine OK-Meldung an den User!!
-	}
 	private void ueber()
 	{
 		Main.showAlert(AlertType.INFORMATION, "\nGraphenProgramm  Version: 2.0\n\nCopyright  Elias Gross 6ACIF  2020");

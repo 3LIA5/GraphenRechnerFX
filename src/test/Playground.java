@@ -1,19 +1,18 @@
 package test;
-import model.*;
 
-public class TestRechner 
+public class Playground 
 {
 
 	public static void main(String[] args) 
 	{
-//		int[][] matrix = 
-//			new int[][] 
-//			{
-//				/*4x4*/
-//				{0,0,1,0},
-//				{0,0,1,1},
-//				{1,1,0,0},
-//				{0,1,0,0}
+		int[][] matrix = 
+			new int[][] 
+			{
+				/*4x4*/
+				{0,0,1,0},
+				{0,0,1,1},
+				{1,1,0,0},
+				{0,1,0,0}
 //				/*8x8*/
 //				{0,1,0,1,0,1,0,0},
 //				{1,0,1,0,0,1,1,0},
@@ -106,14 +105,65 @@ public class TestRechner
 //				/*Y*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1},
 //				/*Z*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}
 //				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
-//			};
-		Graph graph = new Graph();
-		graph.auswerten();
-		System.out.println(graph.toStringMatrix("AdjaM", graph.getAdjazensmatirx()));
-		System.out.println(graph.toStringMatrix("DisMatrix", graph.getDistanzMatrix()));
-		System.out.println(graph.toStringMatrix("WegMatrix", graph.getWegmatrix()));
-		
-//		System.out.println(mr.toString());
+			};
+//		Matrix ma = new Matrix(matrix);
+//		System.out.println(ma);
+		int len=matrix.length;
+		for (int ze=0; ze<len; ze++)
+		{
+			for (int sp=ze; sp<len; sp++)
+			{
+				for (int sp0Ze=0;sp0Ze<sp;sp0Ze++)
+					System.out.print(ze+"|"+sp0Ze+"*"+sp0Ze+"|"+sp+" + ");
+				for (int spSp=sp; spSp<len; spSp++)
+					System.out.print(ze+"|"+(spSp)+"*"+sp+"|"+spSp+" + ");
+				System.out.print('\n');
+			}
+		}
+		System.out.println("\n hallo1 \n");
+		System.out.println(toString(matrix));
+		System.out.println("\n hallo2 \n");
+		int[][][] potenzMatrizen = new int[matrix.length][matrix.length][matrix.length];
+		int[][] distanzMatrix = new int[matrix.length][matrix.length];
+		for (int i=0; i<matrix.length;i++)
+		{
+			distanzMatrix[i]=matrix[i].clone();
+			potenzMatrizen[1]=matrix.clone();
+		}
+		for (int square=2; square<matrix.length; square++)
+		{
+			for (int ze=0; ze<len; ze++)
+			{
+				for (int sp=ze; sp<len; sp++)
+				{
+					int vortex = 0;
+					for (int spZe=0;spZe<sp;spZe++)
+//						System.out.print(ze+"|"+sp0Ze+"*"+sp0Ze+"|"+sp+" + ");
+						vortex += potenzMatrizen[square-1][spZe][sp]*matrix[ze][spZe];
+					for (int spSp=sp; spSp<len; spSp++)
+//						System.out.print(ze+"|"+(spSp)+"*"+sp+"|"+spSp+" + ");
+						vortex += potenzMatrizen[square-1][sp][spSp]*matrix[ze][spSp];
+					potenzMatrizen[square][ze][sp]=vortex;
+				}
+			}
+		}
+		for (int ma=0; ma<matrix.length; ma++)
+		{
+			System.out.println(toString(potenzMatrizen[ma]));
+		}
+	}
+	public static String toString(int[][] matrix)
+	{
+		int length = matrix.length;
+		StringBuilder sb = new StringBuilder();
+		for (int line=0; line<length;line++)
+		{
+			for (int column=0; column<length;column++)
+				sb.append(String.format("%5d", matrix[line][column]));
+			sb.append("\n\n");
+		}
+		sb.append('\n');
+		return sb.toString();
 	}
 
 }

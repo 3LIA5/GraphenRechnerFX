@@ -1,6 +1,4 @@
 package test;
-import java.io.Console;
-
 import model.*;
 
 public class TestMatrix 
