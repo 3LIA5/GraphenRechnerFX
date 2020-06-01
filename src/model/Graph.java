@@ -147,7 +147,36 @@ public class Graph
 			}
 	}
 	
-
+	public int[] calcComponents(Matrix wMatrix)
+	{
+		int length = wMatrix.getMatrix().length;
+		int[] components = new int [length];
+		int [][] matrix =  wMatrix.getMatrix();
+		int anz =2;
+		boolean changed =false;
+		
+		for (int i=0;i<length;i++)
+		{
+			if (matrix[0][i]==0)
+				components[i]=2;
+			else
+				components[i]=1;
+		}
+		for (int line =0; line < length; line++)
+		{
+			for (int column =0; column < length; column++)
+			{
+				if (matrix[line][column]==1 && components[column]==anz)
+				{
+					components[column]=anz+1;
+					changed=true;
+				}
+			}
+			if(changed)anz++;
+		}	
+		return components;
+	}
+	
 	public void exportAdjazensmatirxCsv(String filename) throws GraphenRechnerException
 	{
 		if (filename != null)

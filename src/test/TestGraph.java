@@ -15,14 +15,23 @@ public class TestGraph
 //				{1,1,0,0},
 //				{0,1,0,0}
 //				/*8x8*/
-				{0,1,0,1,0,1,0,0},
-				{1,0,1,0,0,1,1,0},
-				{0,1,0,0,0,0,0,0},
+//				{0,1,0,1,0,1,0,0},
+//				{1,0,1,0,0,1,1,0},
+//				{0,1,0,0,0,0,0,0},
+//				{1,0,0,0,1,0,0,0},
+//				{0,0,0,1,0,1,0,0},
+//				{1,1,0,0,1,0,0,1},
+//				{0,1,0,0,0,0,0,1},
+//				{0,0,0,0,0,1,1,0}
+				/*8x8 3 Komponenten*/
+				{0,1,0,1,0,0,0,0},
 				{1,0,0,0,1,0,0,0},
-				{0,0,0,1,0,1,0,0},
-				{1,1,0,0,1,0,0,1},
-				{0,1,0,0,0,0,0,1},
-				{0,0,0,0,0,1,1,0}
+				{0,0,0,0,0,1,0,0},
+				{1,0,0,0,1,0,0,0},
+				{0,1,0,1,0,0,0,0},
+				{0,0,1,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1},
+				{0,0,0,0,0,0,1,0}
 //			
 //				{0,1,1,1,0,0,0,0},
 //				{1,0,0,0,1,0,0,0},
@@ -137,20 +146,26 @@ public class TestGraph
 		gr.berechneDurchmesserRadiusZentrum();
 		gr.berechneWegmatrix();
 		System.out.println(gr.getWegmatrix());
-		try 
-		{
-			System.out.println("Test: exp_csv");
-//			gr.exportAdjazensmatirxCsv("C:\\scratch\\test.csv");
-			gr.exportAdjazensmatirxCsv("java.io.tmpdir");
-			System.out.println("Test: imp_csv");
-//			gr.importMatrixCsv("C:\\scratch\\test.csv",",");
-			gr.importMatrixCsv("java.io.tmpdir", ",");
-			System.out.println(gr.getAdjazensmatirx());
-		} 
-		catch (GraphenRechnerException e) 
-		{
-			System.out.println(e.getMessage());
-		}
+		
+////		----------------------Test export/import csv ---------------------------
+//		try 
+//		{
+//			System.out.println("Test: exp_csv");
+////			gr.exportAdjazensmatirxCsv("C:\\scratch\\test.csv");
+//			gr.exportAdjazensmatirxCsv("java.io.tmpdir");
+//			System.out.println("Test: imp_csv");
+////			gr.importMatrixCsv("C:\\scratch\\test.csv",",");
+//			gr.importMatrixCsv("java.io.tmpdir", ",");
+//			System.out.println(gr.getAdjazensmatirx());
+//		} 
+//		catch (GraphenRechnerException e) 
+//		{
+//			System.out.println(e.getMessage());
+//		}
+//		-------------------- test calcComponents ------------------------------------
+		int[] comp = gr.calcComponents(gr.getWegmatrix());
+		for(int i:comp)
+			System.out.print(i + " ");
 	}
 
 
