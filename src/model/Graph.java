@@ -147,33 +147,35 @@ public class Graph
 			}
 	}
 	
-	public int[] calcComponents(Matrix wMatrix)
+	public int[] calcComponents(Matrix wegMatrix)
 	{
-		int length = wMatrix.getMatrix().length;
-		int[] components = new int [length];
-		int [][] matrix =  wMatrix.getMatrix();
-		int anz =2;
+		int length = wegMatrix.getMatrix().length;
+		int[] components = new int [length+1];
+		int [][] matrix =  wegMatrix.getMatrix();
 		boolean changed =false;
-		
-		for (int i=0;i<length;i++)
+		int nodes = length;
+		int anz = 1;
+		int line = 0;
+
+		while(nodes>0)
 		{
-			if (matrix[0][i]==0)
-				components[i]=2;
-			else
-				components[i]=1;
-		}
-		for (int line =0; line < length; line++)
-		{
+			if(changed)
+			{
+				anz++;
+				changed=false;
+			}
 			for (int column =0; column < length; column++)
 			{
-				if (matrix[line][column]==1 && components[column]==anz)
+				if (matrix[line][column]==1 && components[column]==0)
 				{
-					components[column]=anz+1;
+					components[column]=anz;
 					changed=true;
+					nodes--;
 				}
 			}
-			if(changed)anz++;
+			line++;
 		}	
+		components[length]=anz;
 		return components;
 	}
 	
