@@ -1,20 +1,17 @@
 package model;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Graph 
 {
-	private Matrix adjazensmatrix,wegMatrix,distanzMatrix;
+	private AdjacencyMatrix adjacencyMatrix;
+	private DistanceMatrix distanzMatrix;
+	private ReachAbilityMatrix reachAbilityMatrix;
 	private String name;
-	int radius, durchmesser, artikulationen, brueken, komponenten;
-	private ArrayList<Integer> zentrum = new ArrayList<Integer>();
 	
 	public Graph(String name) 
 	{
@@ -22,31 +19,18 @@ public class Graph
 	}
 	public Graph() 
 	{
-		this("name");
-		int[][] matrix = 
-			new int[][] 
-			{
-				{0,1,0,1,0,1,0,0},
-				{1,0,1,0,0,1,1,0},
-				{0,1,0,0,0,0,0,0},
-				{1,0,0,0,1,0,0,0},
-				{0,0,0,1,0,1,0,0},
-				{1,1,0,0,1,0,0,1},
-				{0,1,0,0,0,0,0,1},
-				{0,0,0,0,0,1,1,0}
-			};
-		setAdjazensmatirx(new Matrix(matrix));			
+		this("name");		
 	}
 	
-	//-------------------------getter-----------------------
+//	-------------------------getter-----------------------
 
 	public Matrix getAdjazensmatirx() 
 	{
-		return adjazensmatrix;
+		return adjacencyMatrix;
 	}
 	public Matrix getWegmatrix() 
 	{
-		return wegMatrix;
+		return reachAbilityMatrix;
 	}
 	public Matrix getDistanzMatrix() 
 	{
@@ -56,129 +40,25 @@ public class Graph
 	{
 		return name;
 	}
-	//-------------------------setter-----------------------
-	public void setAdjazensmatirx(Matrix adjazensmatirx) 
+
+//	-------------------------setter-----------------------
+	public void setAdjacencyMatrix(AdjacencyMatrix adjacencyMatrix) 
 	{
-		this.adjazensmatrix = adjazensmatirx;
+		this.adjacencyMatrix = adjacencyMatrix;
 	}
-	public void setWegmatrix(Matrix wegMatrix) 
+	public void setDistanztrix() 
 	{
-		this.wegMatrix = wegMatrix;
+		distanzMatrix = new DistanceMatrix(adjacencyMatrix.calculateDistanceMatrix());
 	}
-	public void setDistanztrix(Matrix distanzMatrix) 
+	public void setWegmatrix() 
 	{
-		this.distanzMatrix = distanzMatrix;
-	}
+		reachAbilityMatrix = new ReachAbilityMatrix(distanzMatrix.calculateReachAbilityMatrix());
+	}	
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
-	//-------------------------other-----------------------
-	
-	public void berechneDistanzmatrix() /* multipl. einmal zu oft !*/
-	{
-		int length = adjazensmatrix.getMatrix().length;
-		distanzMatrix = new Matrix(length);
-		int[][][] potenzMatrizen = new int[length][length][length];
-		boolean didchange = false;
-		for (int i=0; i<length;i++)
-		{
-			distanzMatrix.getMatrix()[i]=adjazensmatrix.getMatrix()[i].clone();
-			potenzMatrizen[1][i]=adjazensmatrix.getMatrix()[i].clone();
-		}
-		for (int square=2; square<length; square++)
-		{
-			didchange=false;
-			for (int ze=0; ze<length; ze++)
-			{
-				for (int sp=ze; sp<length; sp++)
-				{
-					int vortex = 0;
-					for (int spZe=0;spZe<sp;spZe++)
-						vortex += potenzMatrizen[square-1][spZe][sp]*adjazensmatrix.getMatrix()[ze][spZe];
-					for (int spSp=sp; spSp<length; spSp++)
-						vortex += potenzMatrizen[square-1][sp][spSp]*adjazensmatrix.getMatrix()[ze][spSp];
-					potenzMatrizen[square][ze][sp]=vortex;
-					if(distanzMatrix.getMatrix()[ze][sp]==0 && vortex!=0 && ze!=sp)
-					{
-						distanzMatrix.getMatrix()[ze][sp]=square;
-						distanzMatrix.getMatrix()[sp][ze]=square;
-						didchange=true;
-					}
-				}
-			}
-//			System.out.println("Potenz: "+square);
-//			System.out.println(new Matrix(potenzMatrizen[square]).toString());
-//			System.out.println(distanzMatrix.toString());
-//			System.out.println("Potenz: "+square);
-			if (!didchange)
-				square=length;
-		}
-	}
-	public void berechneWegmatrix()
-	{
-		int lenght=distanzMatrix.getMatrix().length;
-		int[][] wMatrix = new int[lenght][lenght];
-		for (int line=0; line<lenght; line++)
-		{
-			for (int column=0; column<lenght; column++)
-			{
-				if(distanzMatrix.getMatrix()[line][column]!=0)
-					wMatrix[line][column]=1;
-			}
-			wMatrix[line][line]=1;
-		}
-		wegMatrix = new Matrix(wMatrix);
-	}
-	
-	public void berechneDurchmesserRadiusZentrum()
-	{
-		int[] stat = new int[distanzMatrix.getMatrix().length];
-		for (int vortex=0; vortex<distanzMatrix.getMatrix().length;vortex++)
-		{
-			stat[vortex]=Arrays.stream(distanzMatrix.getMatrix()[vortex]).summaryStatistics().getMax();
-		}
-		radius =  Arrays.stream(stat).summaryStatistics().getMin();
-		durchmesser = Arrays.stream(stat).summaryStatistics().getMax();
-		for (int i=0;i<stat.length;i++)
-			if (stat[i]==radius)
-			{
-				zentrum.add(stat[i]);
-			}
-	}
-	
-	public int[] calcComponents(Matrix wegMatrix)
-	{
-		int length = wegMatrix.getMatrix().length;
-		int[] components = new int [length+1];
-		int [][] matrix =  wegMatrix.getMatrix();
-		boolean changed =false;
-		int nodes = length;
-		int anz = 1;
-		int line = 0;
-
-		while(nodes>0)
-		{
-			if(changed)
-			{
-				anz++;
-				changed=false;
-			}
-			for (int column =0; column < length; column++)
-			{
-				if (matrix[line][column]==1 && components[column]==0)
-				{
-					components[column]=anz;
-					changed=true;
-					nodes--;
-				}
-			}
-			line++;
-		}	
-		components[length]=anz;
-		return components;
-	}
-	
+//	-------------------------other-----------------------
 	public void exportAdjazensmatirxCsv(String filename) throws GraphenRechnerException
 	{
 		if (filename != null)
@@ -186,7 +66,7 @@ public class Graph
 			try
 			{
 				BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
-				bw.write(adjazensmatrix.toStringCsv());
+				bw.write(adjacencyMatrix.toStringCsv());
 				bw.close();
 			}
 			catch (IOException e)
@@ -228,7 +108,7 @@ public class Graph
 				}
 				l++;
 			}
-			adjazensmatrix = new Matrix(aMatrix);
+			adjacencyMatrix = new AdjacencyMatrix(aMatrix);
 		}
 		catch (FileNotFoundException e)
 		{
@@ -237,6 +117,17 @@ public class Graph
 		catch (IOException e)
 		{
 			throw new GraphenRechnerException("IOException beim Aufbau des FIS fuer "+filename);
+		}
+	}
+//	--------------------------- for testing -----------------------------------
+	@SuppressWarnings("unused")
+	private void matrixToString(int [][] matrix)
+	{
+		for(int[] i:matrix)
+		{
+			for(int a:i)
+				System.out.print((String.format("%5d", a)));
+			System.out.println("\n\n");
 		}
 	}
 }

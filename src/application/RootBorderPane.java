@@ -111,11 +111,11 @@ public class RootBorderPane extends BorderPane
 	}
 	private void berechneWegmatrix()
 	{
-		graph.berechneWegmatrix();
+		graph.setWegmatrix();
 	}
 	private void berechneDistanzmatrix()
 	{
-		graph.berechneDistanzmatrix();
+		graph.setDistanztrix();
 	}
 	private void importAdjazensmatrixCsv()
 	{

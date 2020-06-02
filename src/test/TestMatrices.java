@@ -1,13 +1,13 @@
 package test;
-import model.*;
 
-@SuppressWarnings("unused")
-public class TestMatrix 
+public class TestMatrices 
 {
 
-	public static void main(String[] args) 
-	{
-		int[][] matrix_4x4_1Component = 
+	public TestMatrices() 
+	{}
+	public static int[][] matrix_4x4_1Component()
+	{ 
+		return
 			new int[][] 
 				{
 					{0,0,1,0},
@@ -15,15 +15,22 @@ public class TestMatrix
 					{1,1,0,0},
 					{0,1,0,0}
 				};
-		int[][] matrix_4x4_3Component = 
+	}
+				
+	public static int[][] matrix_4x4_3Component()
+	{ 
+		return
 			new int[][] 
-				{
-					{0,0,0,0},
-					{0,0,1,0},
-					{0,1,0,0},
-					{0,0,0,0}
-				};				
-		int[][] matrix_8x8_1Component = 
+			{
+				{0,0,0,0},
+				{0,0,1,0},
+				{0,1,0,0},
+				{0,0,0,0}
+			};	
+	}
+	public static int[][] matrix_8x8_1Component()
+	{ 
+		return
 			new int[][] 
 			{
 				{0,1,0,1,0,1,0,0},
@@ -35,7 +42,10 @@ public class TestMatrix
 				{0,1,0,0,0,0,0,1},
 				{0,0,0,0,0,1,1,0}
 			};
-		int[][] matrix_8x8_3Component = 
+	}
+	public static int[][] matrix_8x8_3Component()
+	{ 
+		return 
 			new int[][] 
 			{	
 				{0,1,0,1,0,0,0,0},
@@ -47,7 +57,10 @@ public class TestMatrix
 				{0,0,0,0,0,0,0,1},
 				{0,0,0,0,0,0,1,0}
 			};
-		int[][] matrix_8x8_4Component = 
+	}
+	public static int[][] matrix_8x8_4Component()
+	{ 
+		return 
 			new int[][] 
 			{	
 				{0,1,0,1,0,0,0,0},
@@ -59,7 +72,10 @@ public class TestMatrix
 				{0,0,0,0,0,0,0,1},
 				{0,0,0,0,0,0,1,0}
 			};
-		int[][] matrix_8x8b = 
+	}
+	public static int[][] matrix_8x8b()
+	{ 
+		return
 			new int[][] 
 			{
 				{0,1,1,1,0,0,0,0},
@@ -71,7 +87,10 @@ public class TestMatrix
 				{0,0,0,1,1,1,0,1},
 				{0,0,0,0,1,1,1,0}
 			};
-		int[][] matrix_15x15_A = 
+	}
+	public static int[][] matrix_15x15_A()
+	{ 
+		return 
 			new int[][] 
 			{
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O}*/
@@ -91,7 +110,10 @@ public class TestMatrix
 				/*N*/{0,0,0,0,0,0,0,0,0,1,0,0,1,0,0},
 				/*O*/{0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}
 			};
-		int[][] matrix_25x25_B = 
+	}
+	public static int[][] matrix_25x25_B()
+	{ 
+		return 
 			new int[][] 
 			{
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}*/
@@ -122,7 +144,10 @@ public class TestMatrix
 				/*Y*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0}
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}*/
 			};
-		int[][] matrix_26x26_C = 
+	}
+	public static int[][] matrix_26x26_C()
+	{ 
+		return 
 			new int[][] 
 			{
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
@@ -154,32 +179,46 @@ public class TestMatrix
 				/*Z*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
 			};
-		int[][] matrix_200x200_200components = new int[200][200];
+	}
+	public static int[][] matrix_200x200_200components()
+	{ 
+		return new int[200][200];
+	}
+	public static int[][] matrix_200x200_1Component()
+	{ 
 		int[][] matrix_200x200_1Component = new int[200][200];
-			for (int i=0;i<matrix_200x200_1Component.length-1;i++)
-			{
-				matrix_200x200_1Component[i][i+1]=1;
-				matrix_200x200_1Component[i+1][i]=1;
-			}
+		for (int i=0;i<matrix_200x200_1Component.length-1;i++)
+		{
+			matrix_200x200_1Component[i][i+1]=1;
+			matrix_200x200_1Component[i+1][i]=1;
+		}
+		return matrix_200x200_1Component;
+	}
+	public static int[][] matrix_200x200_random_A()
+	{
 		int[][] matrix_200x200_random = new int[200][200];
-			for (int z=0;z<matrix_200x200_random.length;z++)
-				for(int s=z;s<matrix_200x200_random.length;s++)
-					matrix_200x200_random[z][s]=(int) Math.round( Math.random());
-			for (int z=1;z<matrix_200x200_random.length;z++)
-				for(int s=0;s<z;s++)
-					matrix_200x200_random[z][s]=matrix_200x200_random[s][z];
-			for (int z=0;z<matrix_200x200_random.length;z++)
-				matrix_200x200_random[z][z]=0;
-//____________________________________________________________________________________________________
-			
-//		Matrix ma = new Matrix(matrix_4x4_3Component);
-//		System.out.println(ma);
-//		System.out.println(ma.toStringCsv());
-
-
+		for (int z=0;z<matrix_200x200_random.length;z++)
+			for(int s=z;s<matrix_200x200_random.length;s++)
+				matrix_200x200_random[z][s]=(int) Math.round( Math.random());
+		for (int z=1;z<matrix_200x200_random.length;z++)
+			for(int s=0;s<z;s++)
+				matrix_200x200_random[z][s]=matrix_200x200_random[s][z];
+		for (int z=0;z<matrix_200x200_random.length;z++)
+			matrix_200x200_random[z][z]=0;
+		return matrix_200x200_random;
+	}
+	public static int[][] matrix_200x200_random_B()
+	{
+		int[][] matrix_200x200_random = new int[200][200];
+		for (int z=0;z<matrix_200x200_random.length;z++)
+			for(int s=z;s<matrix_200x200_random.length;s++)
+				matrix_200x200_random[z][s]=(int) Math.round( Math.random());
+		for (int z=1;z<matrix_200x200_random.length;z++)
+			for(int s=0;s<z;s++)
+				matrix_200x200_random[z][s]=matrix_200x200_random[s][z];
+		for (int z=0;z<matrix_200x200_random.length;z++)
+			matrix_200x200_random[z][z]=0;
+		return matrix_200x200_random;
 	}
 
-
 }
-
-

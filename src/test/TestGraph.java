@@ -6,7 +6,7 @@ public class TestGraph
 	@SuppressWarnings("unused")
 	public static void main(String[] args) 
 	{
-		int[][] matrix_4x4 = 
+		int[][] matrix_4x4_1Component = 
 			new int[][] 
 				{
 					{0,0,1,0},
@@ -14,6 +14,14 @@ public class TestGraph
 					{1,1,0,0},
 					{0,1,0,0}
 				};
+		int[][] matrix_4x4_3Component = 
+			new int[][] 
+				{
+					{0,0,0,0},
+					{0,0,1,0},
+					{0,1,0,0},
+					{0,0,0,0}
+				};				
 		int[][] matrix_8x8_1Component = 
 			new int[][] 
 			{
@@ -164,33 +172,31 @@ public class TestGraph
 		
 
 		
-		Matrix ma= new Matrix(matrix_200x200_1Component);
+		AdjacencyMatrix ma= new AdjacencyMatrix(TestMatrices.matrix_4x4_3Component());
 		System.out.println(ma);
 		Graph gr = new Graph("test");
-		gr.setAdjazensmatirx(ma);
-		gr.berechneDistanzmatrix();
+		gr.setAdjacencyMatrix(ma);
+		gr.setDistanztrix();
 		System.out.println(gr.getDistanzMatrix());
-		gr.berechneDurchmesserRadiusZentrum();
-		gr.berechneWegmatrix();
+		gr.setWegmatrix();
 		System.out.println(gr.getWegmatrix());
 		
 ////		----------------------Test export/import csv ---------------------------
-		try 
-		{
-			System.out.println("Test: exp_csv");
-			gr.exportAdjazensmatirxCsv("java.io.tmpdir");
-			System.out.println("Test: imp_csv");
-			gr.importMatrixCsv("java.io.tmpdir", ",");
-			System.out.println(gr.getAdjazensmatirx());
-		} 
-		catch (GraphenRechnerException e) 
-		{
-			System.out.println(e.getMessage());
-		}
-//		-------------------- test calcComponents ------------------------------------
-		int[] comp = gr.calcComponents(gr.getWegmatrix());
-		for(int i:comp)
-			System.out.print(i + " ");
+//		try 
+//		{
+//			System.out.println("Test: exp_csv");
+//			System.out.println(System.getProperty("java.io.tmpdir")+"matrix_8x8_4Component"+".matrix");
+////			gr.exportAdjazensmatirxCsv(System.getProperty("java.io.tmpdir")+"matrix_200x200_200components"+".csv");
+//			gr.exportAdjazensmatirxCsv("c:\\scratch\\"+"matrix_200x200_1Component"+".csv");
+//			System.out.println("Test: imp_csv");
+////			gr.importMatrixCsv(System.getProperty("java.io.tmpdir")+"matrix_8x8_4Component"+".csv", ",");
+//			gr.importMatrixCsv("C:\\scratch\\"+"matrix_200x200_1Component"+".csv", ",");
+//			System.out.println(gr.getAdjazensmatirx());
+//		} 
+//		catch (GraphenRechnerException e) 
+//		{
+//			System.out.println(e.getMessage());
+//		}	
 	}
 
 
