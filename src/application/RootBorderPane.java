@@ -111,11 +111,25 @@ public class RootBorderPane extends BorderPane
 	}
 	private void berechneWegmatrix()
 	{
-		graph.setWegmatrix();
+		try 
+		{
+			graph.setWegmatrix();
+		} 
+		catch (MatrixException e) 
+		{
+			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+		}
 	}
 	private void berechneDistanzmatrix()
 	{
-		graph.setDistanztrix();
+		try 
+		{
+			graph.setDistanztrix();
+		} 
+		catch (MatrixException e) 
+		{
+			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+		}
 	}
 	private void importAdjazensmatrixCsv()
 	{
@@ -130,7 +144,11 @@ public class RootBorderPane extends BorderPane
 				uebersicht.updateAndShow(graph.getAdjazensmatirx().getMatrix());
 //				disableComponents(false);
 			}
-			catch (GraphenRechnerException e)
+			catch (GraphException e)
+			{
+				Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+			}
+			catch (MatrixException e) 
 			{
 				Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
 			}

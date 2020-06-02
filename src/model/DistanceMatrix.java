@@ -7,15 +7,14 @@ import java.util.Arrays;
 public class DistanceMatrix extends Matrix 
 {
 	private int[] summary;
-	public DistanceMatrix(int[][] matrix) 
+	public DistanceMatrix(int[][] matrix) throws MatrixException 
 	{
 		super(matrix);
 		calculateSummary();
 	}
 //	--------------------------- getter/setter ---------------------------------------
-	public void setMatrix(int[][] matrix) 
+	public void setMatrix(int[][] matrix) throws MatrixException 
 	{
-//		if(ok)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		super.setMatrix(matrix);
 	}
 	public int getRadius()
@@ -64,6 +63,12 @@ public class DistanceMatrix extends Matrix
 			reachAbilityMatrix[line][line]=1;
 		}
 		return reachAbilityMatrix;
+	}
+//	---------------------------- other  ------------------------------------------
+	public boolean isMatrixValid(int[][] matrix) 
+	{
+
+		return false;
 	}
 //	---------------------------- toString  ------------------------------------------
 }

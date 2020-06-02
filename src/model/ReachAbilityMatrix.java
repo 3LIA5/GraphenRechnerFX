@@ -4,14 +4,13 @@ package model;
 public class ReachAbilityMatrix extends Matrix 
 {
 	private int[] components;
-	public ReachAbilityMatrix(int[][] matrix) 
+	public ReachAbilityMatrix(int[][] matrix) throws MatrixException 
 	{
 		super(matrix);
 	}
 //	--------------------------- getter/setter ---------------------------------------
-	public void setMatrix(int[][] matrix) 
+	public void setMatrix(int[][] matrix) throws MatrixException 
 	{
-//		if(ok)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		super.setMatrix(matrix);
 	}
 	public int[] getComponents() 
@@ -54,7 +53,7 @@ public class ReachAbilityMatrix extends Matrix
 		return components;
 	}
 	
-	public boolean[] calculateCutVertices() throws GraphenRechnerException
+	public boolean[] calculateCutVertices() throws GraphException
 	{
 		int length = matrix.length;
 		boolean[] isCutVertice = new boolean[length];
@@ -67,7 +66,12 @@ public class ReachAbilityMatrix extends Matrix
 		}
 		return isCutVertice;
 	}
-	
+//	---------------------------- other  ------------------------------------------
+	public boolean isMatrixValid(int[][] matrix) 
+	{
+
+		return false;
+	}
 //	---------------------------- toString  ------------------------------------------	
 
 }

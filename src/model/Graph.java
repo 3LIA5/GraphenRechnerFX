@@ -46,11 +46,11 @@ public class Graph
 	{
 		this.adjacencyMatrix = adjacencyMatrix;
 	}
-	public void setDistanztrix() 
+	public void setDistanztrix() throws MatrixException 
 	{
 		distanzMatrix = new DistanceMatrix(adjacencyMatrix.calculateDistanceMatrix());
 	}
-	public void setWegmatrix() 
+	public void setWegmatrix() throws MatrixException 
 	{
 		reachAbilityMatrix = new ReachAbilityMatrix(distanzMatrix.calculateReachAbilityMatrix());
 	}	
@@ -59,7 +59,7 @@ public class Graph
 		this.name = name;
 	}
 //	-------------------------other-----------------------
-	public void exportAdjazensmatirxCsv(String filename) throws GraphenRechnerException
+	public void exportAdjazensmatirxCsv(String filename) throws GraphException
 	{
 		if (filename != null)
 		{
@@ -71,14 +71,14 @@ public class Graph
 			}
 			catch (IOException e)
 			{
-				throw new GraphenRechnerException("IOException beim Aufbau des FileWriter fuer "+filename);
+				throw new GraphException("IOException beim Aufbau des FileWriter fuer "+filename);
 			}
 			
 		}
 		else
-			throw new GraphenRechnerException("null-Ref für loadMitarbeiter(String filename)");
+			throw new GraphException("null-Ref für loadMitarbeiter(String filename)");
 	}
-	public void importMatrixCsv(String filename, String delimiter) throws GraphenRechnerException
+	public void importMatrixCsv(String filename, String delimiter) throws GraphException, MatrixException
 	{
 		try (BufferedReader br = new BufferedReader(new FileReader(filename));)
 		{
@@ -112,11 +112,11 @@ public class Graph
 		}
 		catch (FileNotFoundException e)
 		{
-			throw new GraphenRechnerException("FileNotFoundException beim Aufbau des FileReades fuer "+filename);
+			throw new GraphException("FileNotFoundException beim Aufbau des FileReades fuer "+filename);
 		}
 		catch (IOException e)
 		{
-			throw new GraphenRechnerException("IOException beim Aufbau des FIS fuer "+filename);
+			throw new GraphException("IOException beim Aufbau des FIS fuer "+filename);
 		}
 	}
 //	--------------------------- for testing -----------------------------------

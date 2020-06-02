@@ -172,14 +172,22 @@ public class TestGraph
 		
 
 		
-		AdjacencyMatrix ma= new AdjacencyMatrix(TestMatrices.matrix_4x4_3Component());
-		System.out.println(ma);
-		Graph gr = new Graph("test");
-		gr.setAdjacencyMatrix(ma);
-		gr.setDistanztrix();
-		System.out.println(gr.getDistanzMatrix());
-		gr.setWegmatrix();
-		System.out.println(gr.getWegmatrix());
+		AdjacencyMatrix ma;
+		try 
+		{
+			ma = new AdjacencyMatrix(TestMatrices.matrix_4x4_3Component());
+			System.out.println(ma);
+			Graph gr = new Graph("test");
+			gr.setAdjacencyMatrix(ma);
+			gr.setDistanztrix();
+			System.out.println(gr.getDistanzMatrix());
+			gr.setWegmatrix();
+			System.out.println(gr.getWegmatrix());
+		} 
+		catch (MatrixException e) 
+		{
+			System.out.println(e.getMessage());
+		}
 		
 ////		----------------------Test export/import csv ---------------------------
 //		try 

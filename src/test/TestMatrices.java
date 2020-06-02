@@ -1,13 +1,109 @@
 package test;
 
+import java.util.ArrayList;
+
 public class TestMatrices 
 {
 
 	public TestMatrices() 
 	{}
+	public static ArrayList<int[][]> flawedMatrices()
+	{
+		ArrayList<int[][]> flawedMatrices=new ArrayList<int[][]>();
+		flawedMatrices.add(matrixFlawed_null());
+		flawedMatrices.add(matrixFlawed_4xnull());
+		flawedMatrices.add(matrixFlawed_4xXY());
+		flawedMatrices.add(matrixFlawed_11is1());
+		flawedMatrices.add(matrixFlawed_44is1());
+		flawedMatrices.add(matrixFlawed_undirected());
+		flawedMatrices.add(matrixFlawed_edgesBigger1() );
+		flawedMatrices.add(matrixFlawed_edgesSmaler0() );
+		return flawedMatrices;
+	}
+	public static int[][] matrixFlawed_null()
+	{ 
+		return null;
+	}
+	public static int[][] matrixFlawed_4xnull()
+	{ 
+		return 
+			new int[][] 
+				{
+					null,
+					null,
+					null,
+					null
+				};
+	}
+	public static int[][] matrixFlawed_4xXY()
+	{ 
+		return 
+			new int[][] 
+				{
+					{0,0,1,0},
+					{0,0,1,1,0},
+					{1,1,0},
+					{0,1}
+				};
+	}
+	public static int[][] matrixFlawed_11is1()
+	{ 
+		return 
+			new int[][] 
+				{
+					{0,0,1,0},
+					{0,1,1,1},
+					{1,1,0,0},
+					{0,1,0,0}
+				};
+	}
+	public static int[][] matrixFlawed_44is1()
+	{ 
+		return 
+			new int[][] 
+				{
+					{0,0,1,0},
+					{0,0,1,1},
+					{1,1,0,0},
+					{0,1,0,1}
+				};
+	}
+	public static int[][] matrixFlawed_undirected()
+	{ 
+		return 
+			new int[][] 
+				{
+					{0,0,1,0},
+					{1,0,1,1},
+					{0,1,0,0},
+					{0,0,1,1}
+				};
+	}
+	public static int[][] matrixFlawed_edgesBigger1()
+	{ 
+		return 
+			new int[][] 
+				{
+					{0,0,1,0},
+					{0,0,21234,1},
+					{1,21234,0,0},
+					{0,1,0,0}
+				};
+	}
+	public static int[][] matrixFlawed_edgesSmaler0()
+	{ 
+		return 
+			new int[][] 
+				{
+					{0,0,1,0},
+					{0,0,-1,1},
+					{1,-1,0,0},
+					{0,1,0,0}
+				};
+	}
 	public static int[][] matrix_4x4_1Component()
 	{ 
-		return
+		return 
 			new int[][] 
 				{
 					{0,0,1,0},
@@ -180,19 +276,15 @@ public class TestMatrices
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
 			};
 	}
-	public static int[][] matrix_200x200_200components()
+	public static int[][] matrix_line(int size)
 	{ 
-		return new int[200][200];
-	}
-	public static int[][] matrix_200x200_1Component()
-	{ 
-		int[][] matrix_200x200_1Component = new int[200][200];
-		for (int i=0;i<matrix_200x200_1Component.length-1;i++)
+		int[][] matrix_line = new int[size][size];
+		for (int i=0;i<matrix_line.length-1;i++)
 		{
-			matrix_200x200_1Component[i][i+1]=1;
-			matrix_200x200_1Component[i+1][i]=1;
+			matrix_line[i][i+1]=1;
+			matrix_line[i+1][i]=1;
 		}
-		return matrix_200x200_1Component;
+		return matrix_line;
 	}
 	public static int[][] matrix_200x200_random_A()
 	{

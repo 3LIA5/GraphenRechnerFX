@@ -4,18 +4,17 @@ package model;
 public class AdjacencyMatrix extends Matrix 
 {
 
-	public AdjacencyMatrix(int[][] matrix) 
+	public AdjacencyMatrix(int[][] matrix) throws MatrixException 
 	{
 		super(matrix);
 	}
 //	--------------------------- getter/setter ---------------------------------------
-	public void setMatrix(int[][] matrix) 
+	public void setMatrix(int[][] matrix) throws MatrixException 
 	{
-//		if(ok)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		super.setMatrix(matrix);
 	}
 //	---------------------------- calculate ------------------------------------------
-	public int[][] calculateDistanceMatrix() /* multiplies one time to often ... !*/
+	public int[][] calculateDistanceMatrix() /* multiplies one time then it needs ... !*/
 	{
 		int length = matrix.length;
 		int[][] distanceMatrix = new int[length][length];
@@ -53,6 +52,31 @@ public class AdjacencyMatrix extends Matrix
 		}
 		
 		return distanceMatrix;
+	}
+//	------------------------------- other  ------------------------------------------
+	public boolean isMatrixValid(int[][] matrix)
+	{
+		if(matrix==null)
+			return false;
+		int length = matrix.length;
+		for (int line=0;line<length;line++)
+		{
+			if(matrix[line]==null)
+				return false;
+			if(length!=matrix[line].length)
+				return false;
+			if(matrix[line][line]!=0)
+				return false;
+		}
+		for (int line=1;line<length;line++)
+			for(int column=0;column<line;column++)
+			{
+				if(matrix[line][column]!=matrix[column][line])
+					return false;
+				if(matrix[line][column]<0||matrix[line][column]>1)
+					return false;				
+			}
+		return true;
 	}
 //	---------------------------- toString  ------------------------------------------
 }

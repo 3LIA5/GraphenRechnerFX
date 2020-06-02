@@ -1,5 +1,4 @@
 package model;
-
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -7,14 +6,17 @@ public abstract class Matrix implements Serializable
 {
 	protected int[][] matrix;
 	
-	public Matrix(int[][] matrix) 
+	public Matrix(int[][] matrix) throws MatrixException 
 	{
 		setMatrix(matrix);
 	}
 //	--------------------------- getter/setter ---------------------------------------
-	public void setMatrix(int[][] matrix)
+	public void setMatrix(int[][] matrix) throws MatrixException
 	{
-		this.matrix=matrix;
+		if(isMatrixValid(matrix))
+			this.matrix=matrix;
+		else
+			throw new MatrixException("Matrix nicht zulässig!");
 	}
 	public int[][] getMatrix() 
 	{
@@ -40,6 +42,7 @@ public abstract class Matrix implements Serializable
 		}
 		return minorMatrix;
 	}
+	public abstract boolean isMatrixValid(int[][] matrix);
 //	---------------------------- toString  ------------------------------------------	
 	public String toString()
 	{
