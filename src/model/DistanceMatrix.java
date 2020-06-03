@@ -21,12 +21,10 @@ public class DistanceMatrix extends Matrix
 	{
 		return Arrays.stream(summary).summaryStatistics().getMin();
 	}
-	
 	public int getDiameter()
 	{
 		return Arrays.stream(summary).summaryStatistics().getMax();
 	}
-	
 	public ArrayList<Integer> getCentre()
 	{
 		ArrayList<Integer> centre = new ArrayList<Integer>();
@@ -46,9 +44,6 @@ public class DistanceMatrix extends Matrix
 			summary[vortex]=Arrays.stream(matrix[vortex]).summaryStatistics().getMax();
 		}
 	}
-	
-
-	
 	public int[][] calculateReachAbilityMatrix()
 	{
 		int lenght=matrix.length;
@@ -67,8 +62,27 @@ public class DistanceMatrix extends Matrix
 //	---------------------------- other  ------------------------------------------
 	public boolean isMatrixValid(int[][] matrix) 
 	{
-
-		return false;
+		if(matrix==null)
+			return false;
+		int length = matrix.length;
+		for (int line=0;line<length;line++)
+		{
+			if(matrix[line]==null)
+				return false;
+			if(length!=matrix[line].length)
+				return false;
+			if(matrix[line][line]!=0)
+				return false;
+		}
+		for (int line=1;line<length;line++)
+			for(int column=0;column<line;column++)
+			{
+				if(matrix[line][column]!=matrix[column][line])
+					return false;
+				if(matrix[line][column]<0)
+					return false;				
+			}
+		return true;
 	}
 //	---------------------------- toString  ------------------------------------------
 }

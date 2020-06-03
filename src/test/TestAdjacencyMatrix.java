@@ -1,6 +1,7 @@
 package test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import model.AdjacencyMatrix;
 import model.MatrixException;
@@ -25,12 +26,15 @@ public class TestAdjacencyMatrix
 		
 		System.out.println("test calculateDistanceMatrix()");		
 		try{
-			SysMatrix(TestMatrices.matrix_4x4_1Component());
-			System.out.println("------------------");
 			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_4x4_1Component());
-			SysMatrix(aM.calculateDistanceMatrix());
-			System.out.println("------------------");
-		}catch (MatrixException e){System.out.println(e.getMessage());}
+			boolean equals=true;
+			for (int length=0; length<aM.getMatrix().length; length++)
+				if(Arrays.equals(aM.calculateDistanceMatrix()[length],TestMatrices.matrix_4x4_1Component_DistanceMatrix()[length]))
+					System.out.println("matrix_4x4_1Component Line "+length+": ok");
+				else
+					System.out.println("matrix_4x4_1Component Line "+length+": notOk");
+		}
+		catch (MatrixException e){System.out.println(e.getMessage());}
 		try{
 			System.out.println("------------------");
 			SysMatrix(TestMatrices.matrix_8x8_3Component());
