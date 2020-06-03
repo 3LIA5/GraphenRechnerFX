@@ -25,7 +25,8 @@ public class TestDistanceMatrix
 		
 		System.out.println("test calculateDistanceMatrix()");	
 		
-		try{
+		try
+		{
 			DistanceMatrix dm = new DistanceMatrix(new AdjacencyMatrix(TestMatrices.matrix_4x4_1Component()).calculateDistanceMatrix());
 			boolean equals=true;
 			for (int length=0; length<dm.getMatrix().length; length++)
@@ -33,28 +34,7 @@ public class TestDistanceMatrix
 					System.out.println("matrix_4x4_1Component Line "+length+": ok");
 				else
 					System.out.println("matrix_4x4_1Component Line "+length+": notOk");
-		}
-		catch (MatrixException e){System.out.println(e.getMessage());}
-//		try{
-//			System.out.println("------------------");
-//			SysMatrix(TestMatrices.matrix_8x8_3Component());
-//			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_8x8_3Component());
-//			System.out.println("------------------");
-//			SysMatrix(aM.calculateDistanceMatrix());
-//		}catch (MatrixException e){System.out.println(e.getMessage());}
-//		try{
-//			System.out.println("------------------");
-//			SysMatrix(TestMatrices.matrix_line(8));
-//			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_line(8));
-//			System.out.println("------------------");
-//			SysMatrix(aM.calculateDistanceMatrix());
-//		}catch (MatrixException e){System.out.println(e.getMessage());}
-//		try{
-//			System.out.println("------------------");
-//			AdjacencyMatrix aM = new AdjacencyMatrix(new int[6][6]);
-//			System.out.println("------------------");
-//			SysMatrix(aM.calculateDistanceMatrix());
-//		}catch (MatrixException e){System.out.println(e.getMessage());}
+		}catch (MatrixException e){System.out.println(e.getMessage());}
 
 	}
 	public static void SysMatrix(int [][] matrix)

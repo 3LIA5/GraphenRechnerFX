@@ -70,7 +70,7 @@ public class ReachAbilityMatrix extends Matrix
 	public boolean isMatrixValid(int[][] matrix) 
 	{
 
-		return false;
+		return true;
 	}
 //	---------------------------- toString  ------------------------------------------	
 
