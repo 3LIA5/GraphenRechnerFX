@@ -27,6 +27,7 @@ public class TestDistanceMatrix
 		
 		try
 		{
+			System.out.println("TestMatrices.matrix_4x4_1Component()");
 			DistanceMatrix dm = new DistanceMatrix(new AdjacencyMatrix(TestMatrices.matrix_4x4_1Component()).calculateDistanceMatrix());
 			boolean equals=true;
 			for (int length=0; length<dm.getMatrix().length; length++)
@@ -35,6 +36,7 @@ public class TestDistanceMatrix
 				else
 					System.out.println("matrix_4x4_1Component Line "+length+": notOk");
 		}catch (MatrixException e){System.out.println(e.getMessage());}
+
 
 	}
 	public static void SysMatrix(int [][] matrix)

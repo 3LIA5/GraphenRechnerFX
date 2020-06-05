@@ -5,13 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Graph 
 {
 	private AdjacencyMatrix adjacencyMatrix;
-	private DistanceMatrix distanzMatrix;
-	private ReachAbilityMatrix reachAbilityMatrix;
+	private DistanceMatrix distanceMatrix;
+	private ReachAbilityMatrix reachabilityMatrix;
 	private String name;
+	private boolean[] cutVertices;
 	
 	public Graph(String name) 
 	{
@@ -24,21 +27,31 @@ public class Graph
 	
 //	-------------------------getter-----------------------
 
-	public Matrix getAdjazensmatirx() 
+	public AdjacencyMatrix getAdjazensmatirx()
 	{
+//		if (adjacencyMatrix==null)
+//			throw new GraphException("no adjacency Matrix available!");
 		return adjacencyMatrix;
 	}
-	public Matrix getWegmatrix() 
+	public ReachAbilityMatrix getReachabilityMatrix() 
 	{
-		return reachAbilityMatrix;
+//		if (reachabilityMatrix==null)
+//			throw new GraphException("no reachability Matrix available!");
+		return reachabilityMatrix;
 	}
-	public Matrix getDistanzMatrix() 
+	public DistanceMatrix getDistanceMatrix()
 	{
-		return distanzMatrix;
+//		if (distanceMatrix==null)
+//			throw new GraphException("no distance Matrix available!");
+		return distanceMatrix;
 	}
 	public String getName() 
 	{
 		return name;
+	}
+	public boolean[] getCutVertices()
+	{
+		return cutVertices;
 	}
 
 //	-------------------------setter-----------------------
@@ -48,16 +61,72 @@ public class Graph
 	}
 	public void setDistanztrix() throws MatrixException 
 	{
-		distanzMatrix = new DistanceMatrix(adjacencyMatrix.calculateDistanceMatrix());
+		distanceMatrix = new DistanceMatrix(adjacencyMatrix);
 	}
 	public void setWegmatrix() throws MatrixException 
 	{
-		reachAbilityMatrix = new ReachAbilityMatrix(distanzMatrix.calculateReachAbilityMatrix());
+		reachabilityMatrix = new ReachAbilityMatrix(distanceMatrix);
 	}	
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
+//	------------------------- calculations -----------------------	
+	public int getRadius()
+	{
+		return Arrays.stream(distanceMatrix.getSummary()).summaryStatistics().getMin();
+	}
+	public int getDiameter()
+	{
+		return Arrays.stream(distanceMatrix.getSummary()).summaryStatistics().getMax();
+	}
+	public int[] getCentre()
+	{
+		ArrayList<Integer> centre = new ArrayList<Integer>();
+		for (int i=0;i<distanceMatrix.getSummary().length;i++)
+			if (distanceMatrix.getSummary()[i]==getRadius())
+			{
+				centre.add(i+1);
+			}
+		return centre.stream().mapToInt(i->i).toArray();
+		//Info: compiler does: mapToInt( (Integer i) -> i.intValue() ) 
+	}
+
+	public void calculateCutVertices() throws GraphException, MatrixException
+	{
+		int length = reachabilityMatrix.getMatrix().length;
+		boolean[] isCutVertice = new boolean[length];
+		for (int vortex=0; vortex<length; vortex++)
+		{
+			if(new ReachAbilityMatrix(new DistanceMatrix(new AdjacencyMatrix(adjacencyMatrix.removeVortex(vortex)))).getComponents()[length-1]>reachabilityMatrix.getComponents()[length])
+				isCutVertice[vortex]=true;
+			else
+				isCutVertice[vortex]=false;
+		}
+//		for (int count=0; )
+		cutVertices = isCutVertice;
+////		-----------------
+//		int[] cutVertices = new int[4];
+//		for (int vortex=0; vortex<cutVertices.length;vortex++)
+//			if(cutVertices[vortex])
+//			{
+//				sb.append(prefix).append(vortex+1);
+//				prefix=",";
+//			}
+//		sb.append("}\n");
+//		return sb.toString();
+	}
+//	//work in progress!!!!!!!!!!!!!!!!!!!!!
+//	public void calculateBridges() throws GraphException, MatrixException
+//	{
+//		int length = reachabilityMatrix.getMatrix().length;
+//		ArrayList<int[]>bridges = new ArrayList<int[]>();
+//		for (int vortexX=0; vortexX<length; vortexX++)
+//			for (int vortexY=0; vortexY<length; vortexY++)
+//				if(new ReachAbilityMatrix(new DistanceMatrix(new AdjacencyMatrix(adjacencyMatrix.removeEdge(vortexX, vortexY)))).getComponents()[length-1]>reachabilityMatrix.getComponents()[length])
+//					bridges.add(new int[]{vortexX,vortexY});
+//	}
+	
 //	-------------------------other-----------------------
 	public void exportAdjazensmatirxCsv(String filename) throws GraphException
 	{
@@ -118,6 +187,74 @@ public class Graph
 		{
 			throw new GraphException("IOException beim Aufbau des FIS fuer "+filename);
 		}
+	}
+//	---------------------------   toString   -----------------------------------	
+	public String toStringComponents() throws MatrixException
+	{
+		int[] components = reachabilityMatrix.getComponents();
+		StringBuilder sbComponents = new StringBuilder();
+		StringBuilder sbVortex;
+		StringBuilder sbEdges;
+		String prefix;
+		for (int component=1; component<=components[components.length-1];component++)
+		{
+			sbVortex = new StringBuilder();
+			sbEdges = new StringBuilder();
+			prefix="";
+			for(int vortex=0; vortex<components.length-1; vortex++)
+			{
+				if (components[vortex]==component)
+				{
+					sbVortex.append(prefix).append((vortex+1));
+					String edges= adjacencyMatrix.toStringEdgesOfVortexTo(vortex+1);
+					if(!edges.equals(""))
+						sbEdges.append(prefix).append(edges);
+					prefix=",";
+				}
+				
+			}
+			sbComponents.append("K"+component+"= ({").append(sbVortex.toString()).append("},{").append(sbEdges.toString()).append("})\n");
+		}
+		return sbComponents.toString();
+	}
+	public String radiusToString()
+	{
+		return new String("radius = "+getRadius()+'\n');
+	}
+	public String diameterToString()
+	{
+		return new String("diameter = "+getDiameter()+'\n');
+	}
+	public String centreToString()
+	{
+		int radius = getRadius();
+		StringBuilder sb = new StringBuilder();
+		sb.append("centre = {");
+		String prefix = "";
+		for (int vortex=0; vortex<distanceMatrix.getSummary().length;vortex++)
+		{
+			if(distanceMatrix.getSummary()[vortex]==radius)
+			{
+				sb.append(String.format("%s%d",prefix, vortex+1));
+				prefix=",";
+			}
+		}
+		sb.append("}\n");
+		return sb.toString();
+	}
+	public String toStringCutVertices()
+	{
+		StringBuilder sb = new StringBuilder();
+		String prefix="";
+		sb.append("Artikulationen = {");
+		for (int vortex=0; vortex<cutVertices.length;vortex++)
+			if(cutVertices[vortex])
+			{
+				sb.append(prefix).append(vortex+1);
+				prefix=",";
+			}
+		sb.append("}\n");
+		return sb.toString();
 	}
 //	--------------------------- for testing -----------------------------------
 	@SuppressWarnings("unused")

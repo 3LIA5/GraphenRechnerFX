@@ -6,8 +6,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import model.*;
 
@@ -15,13 +17,13 @@ public class RootBorderPane extends BorderPane
 {
 	private MenuBar menuBar;
 	private Menu mDatei, mBerechnen, mAnsicht, mHilfe;
-	private MenuItem miNeu, miLaden, miSpeichern, miImportieren, miExportieren, miBeenden,
+	private MenuItem miNeu, miLaden, miSpeichern, miImportAdjazensmatrixCsv, miExportieren, miBeenden,
 					 miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten,
 					 miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht, miEigenschaften,
 					 miUeber;
-	
-	private Graph graph;	
-	private MatrixUebersicht uebersicht;
+	private Graph graph;
+	private TextArea viewMatrix;
+	private TextArea viewStats;
 	
 	public RootBorderPane()
 	{
@@ -42,13 +44,13 @@ public class RootBorderPane extends BorderPane
 		miNeu = new MenuItem("Neu");
 		miLaden = new MenuItem("Laden");
 		miSpeichern = new MenuItem("Speichern");
-		miImportieren = new MenuItem("csv Importieren");
-		miExportieren = new MenuItem("csv Exportieren");
+		miImportAdjazensmatrixCsv = new MenuItem("csv Import");
+		miExportieren = new MenuItem("csv Export");
 		miBeenden = new MenuItem("Beenden");
 		miNeu.setDisable(true);
 		miLaden.setDisable(true);
 		miSpeichern.setDisable(true);
-		miImportieren.setDisable(false);
+		miImportAdjazensmatrixCsv.setDisable(false);
 		miExportieren.setDisable(true);
 		miBeenden.setDisable(false);
 		
@@ -74,7 +76,15 @@ public class RootBorderPane extends BorderPane
 		
 		miUeber = new MenuItem("Über");
 		
-		uebersicht = new MatrixUebersicht();
+//		uebersicht = new MatrixUebersicht();
+		viewMatrix = new TextArea();
+			viewMatrix.setFont(Font.font("Consolas", 12));
+			viewMatrix.setEditable(false);
+		viewStats = new TextArea();
+			viewStats.setFont(Font.font("Consolas", 12));
+			viewStats.setEditable(false);
+//			viewStats.prefWidthProperty().bind(this.widthProperty());
+			viewStats.setMaxWidth(150);
 	}
 	private void initModel()
 	{
@@ -84,52 +94,34 @@ public class RootBorderPane extends BorderPane
 	{
 		setTop(menuBar);
 		
-		menuBar.getMenus().addAll(mDatei, mBerechnen, mAnsicht, mHilfe);
+		menuBar.getMenus().addAll(mDatei,mBerechnen, mAnsicht, mHilfe);
 		
-		mDatei.getItems().addAll(miNeu, miLaden, miSpeichern, new SeparatorMenuItem(), miImportieren, miExportieren, new SeparatorMenuItem(), miBeenden);
+		mDatei.getItems().addAll(miNeu, miLaden, miSpeichern, new SeparatorMenuItem(), miImportAdjazensmatrixCsv, miExportieren, new SeparatorMenuItem(), miBeenden);
 		mBerechnen.getItems().addAll(miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten);
 		mAnsicht.getItems().addAll(miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht, miEigenschaften);
 		mHilfe.getItems().addAll(miUeber);
 		
-		setCenter(uebersicht);
+		setCenter(viewMatrix);
+		setLeft(viewStats);
 	}
 	private void addHandlers()
 	{
-		miImportieren.setOnAction(event -> importAdjazensmatrixCsv());
-		miAdjazensmatrixAnsicht.setOnAction(event -> ansichtMatrix(graph.getAdjazensmatirx().getMatrix()));
-		miDistanzmatrixAnsicht.setOnAction(event -> ansichtMatrix(graph.getDistanzMatrix().getMatrix()));
-		miWegmatrixAnsicht.setOnAction(event -> ansichtMatrix(graph.getWegmatrix().getMatrix()));
+		miImportAdjazensmatrixCsv.setOnAction(event -> importAdjazensmatrixCsv());
+		miAdjazensmatrixAnsicht.setOnAction(event -> viewMatrix(graph.getAdjazensmatirx()));
+		miDistanzmatrixAnsicht.setOnAction(event -> viewMatrix(graph.getDistanceMatrix()));
+		miWegmatrixAnsicht.setOnAction(event -> viewMatrix(graph.getReachabilityMatrix()));
 		miDistanzmatrix.setOnAction(event -> berechneDistanzmatrix());
 		miWegmatrix.setOnAction(event -> berechneWegmatrix());
 		miBeenden.setOnAction( event -> beenden() );
 		miUeber.setOnAction(event -> ueber() );	
+		
 	}
 //-------------------------------------- Handler-Methoden ---------------------------	
-	private void ansichtMatrix(int[][] matrix)
+	private void viewMatrix(Matrix matrix)
 	{
-		uebersicht.updateAndShow(matrix);
-	}
-	private void berechneWegmatrix()
-	{
-		try 
-		{
-			graph.setWegmatrix();
-		} 
-		catch (MatrixException e) 
-		{
-			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
-		}
-	}
-	private void berechneDistanzmatrix()
-	{
-		try 
-		{
-			graph.setDistanztrix();
-		} 
-		catch (MatrixException e) 
-		{
-			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
-		}
+		if (matrix==null)
+			Main.showAlert(AlertType.ERROR, "Null Ref. : no Matrix available!");
+		viewMatrix.setText(matrix.toString());
 	}
 	private void importAdjazensmatrixCsv()
 	{
@@ -141,7 +133,7 @@ public class RootBorderPane extends BorderPane
 			try
 			{
 				graph.importMatrixCsv(selected.getAbsolutePath(),",");
-				uebersicht.updateAndShow(graph.getAdjazensmatirx().getMatrix());
+//				ansichtMatrix(graph.getAdjazensmatirx());
 //				disableComponents(false);
 			}
 			catch (GraphException e)
@@ -155,6 +147,34 @@ public class RootBorderPane extends BorderPane
 		}
 		else
 			Main.showAlert(AlertType.INFORMATION, "Benutzer-Abbruch");
+	}
+	private void berechneDistanzmatrix()
+	{
+		try 
+		{
+			graph.setDistanztrix();
+			viewMatrix(graph.getDistanceMatrix());
+			viewStats.appendText(graph.radiusToString());
+			viewStats.appendText(graph.diameterToString());
+			viewStats.appendText(graph.centreToString());
+		} 
+		catch (MatrixException e) 
+		{
+			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+		}
+	}
+	private void berechneWegmatrix()
+	{
+		try 
+		{
+			graph.setWegmatrix();
+			viewMatrix(graph.getReachabilityMatrix());
+			viewStats.appendText(graph.toStringComponents());
+		} 
+		catch (MatrixException e) 
+		{
+			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+		}
 	}
 	
 	private void ueber()

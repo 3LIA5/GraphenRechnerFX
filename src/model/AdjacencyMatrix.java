@@ -79,4 +79,18 @@ public class AdjacencyMatrix extends Matrix
 		return true;
 	}
 //	---------------------------- toString  ------------------------------------------
+	public String toStringEdgesOfVortexTo(int vortex) throws MatrixException
+	{
+		if (vortex<1 || vortex>matrix.length)
+			throw new MatrixException("Fehler in toStringEdgesOfVortexTo(int vortex): vortex must be greater then 0 and smaler then :"+matrix.length);
+		StringBuilder sb = new StringBuilder();
+		String prefix = "";
+		for(int vortexTo=vortex;vortexTo<matrix.length;vortexTo++)
+			if(matrix[vortex-1][vortexTo]==1) 
+			{
+				sb.append(prefix+"["+(vortex)+","+(vortexTo+1)+"]");
+				prefix = ",";
+			}
+		return sb.toString();
+	}
 }

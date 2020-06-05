@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @SuppressWarnings("serial")
@@ -12,28 +11,19 @@ public class DistanceMatrix extends Matrix
 		super(matrix);
 		calculateSummary();
 	}
+	public DistanceMatrix(AdjacencyMatrix matrix) throws MatrixException 
+	{
+		super(matrix.calculateDistanceMatrix());
+		calculateSummary();
+	}
 //	--------------------------- getter/setter ---------------------------------------
 	public void setMatrix(int[][] matrix) throws MatrixException 
 	{
 		super.setMatrix(matrix);
 	}
-	public int getRadius()
+	public int[] getSummary()
 	{
-		return Arrays.stream(summary).summaryStatistics().getMin();
-	}
-	public int getDiameter()
-	{
-		return Arrays.stream(summary).summaryStatistics().getMax();
-	}
-	public ArrayList<Integer> getCentre()
-	{
-		ArrayList<Integer> centre = new ArrayList<Integer>();
-		for (int i=0;i<summary.length;i++)
-			if (summary[i]==getRadius())
-			{
-				centre.add(summary[i]);
-			}
-		return centre;
+		return summary;
 	}
 //	---------------------------- calculate ------------------------------------------
 	public void calculateSummary()
@@ -85,4 +75,5 @@ public class DistanceMatrix extends Matrix
 		return true;
 	}
 //	---------------------------- toString  ------------------------------------------
+	
 }

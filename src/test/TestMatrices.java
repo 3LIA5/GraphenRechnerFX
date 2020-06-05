@@ -134,6 +134,26 @@ public class TestMatrices
 					{1,1,1,1}
 				};
 	}
+	public static String matrix_4x4_1Component_durchmesser()
+	{
+		return new String("diameter = 3\n");
+	}
+	public static String matrix_4x4_1Component_radius()
+	{
+		return new String("radius = 2\n");
+	}
+	public static String matrix_4x4_1Component_Zentrum()
+	{
+		return new String("centre = {2,3}\n");
+	}
+	public static String matrix_4x4_1Component_Bruecken()
+	{
+		return new String("Brücken = {[1,3],[2,3],[2,4]}\n") ;
+	}
+	public static String matrix_4x4_1Component_Artikulationen()
+	{
+		return new String("Artikulationen = {2,3}\n") ;
+	}
 				
 	public static int[][] matrix_4x4_3Component()
 	{ 
@@ -263,6 +283,26 @@ public class TestMatrices
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}*/
 			};
 	}
+	public static String matrix_25x25_B_durchmesser()
+	{
+		return new String("diameter = 7\n");
+	}
+	public static String matrix_25x25_B_radius()
+	{
+		return new String("radius = 4\n");
+	}
+	public static String matrix_25x25_B_Zentrum()
+	{
+		return new String("centre = {9,18}\n");
+	}
+	public static String matrix_25x25_B_Bruecken()
+	{
+		return new String("Brücken = {}\n") ;
+	}
+	public static String matrix_25x25_B_Artikulationen()
+	{
+		return new String("Artikulationen = {9,23}\n") ;
+	}
 	public static int[][] matrix_26x26_C()
 	{ 
 		return 
@@ -321,18 +361,39 @@ public class TestMatrices
 			matrix_200x200_random[z][z]=0;
 		return matrix_200x200_random;
 	}
-	public static int[][] matrix_200x200_random_B()
+	public static int[][] matrix_random_line(int size)
 	{
-		int[][] matrix_200x200_random = new int[200][200];
-		for (int z=0;z<matrix_200x200_random.length;z++)
-			for(int s=z;s<matrix_200x200_random.length;s++)
-				matrix_200x200_random[z][s]=(int) Math.round( Math.random());
-		for (int z=1;z<matrix_200x200_random.length;z++)
-			for(int s=0;s<z;s++)
-				matrix_200x200_random[z][s]=matrix_200x200_random[s][z];
-		for (int z=0;z<matrix_200x200_random.length;z++)
-			matrix_200x200_random[z][z]=0;
-		return matrix_200x200_random;
+		int[][] matrix_random_line = new int[size][size];
+		for (int i=0;i<size-1;i++)
+		{
+			matrix_random_line[i][i+1]=(int) Math.round( Math.random());
+			matrix_random_line[i+1][i]=matrix_random_line[i][i+1];
+		}
+		for (int i=0;i<size-2;i++)
+		{
+			matrix_random_line[i][i+2]=(int) Math.round( Math.random());
+			matrix_random_line[i+2][i]=matrix_random_line[i][i+2];
+		}
+		return matrix_random_line;
+	}
+	public static String toStringMatrix(int[][] matrix)
+	{
+    	int length = matrix.length;
+    	int digitsLength=length<10?1:length<100?2:3;
+    	StringBuilder sb = new StringBuilder(((length+3)*(length+1))+length);
+		for (int line=0; line<length;line++)
+		{
+			String prefix = "";
+			sb.append(String.format("%-"+digitsLength+"d:",line+1));
+			for (int column=0; column<length;column++)
+			{
+				sb.append(String.format("%s%d",prefix, matrix[line][column]));
+				prefix=",";
+			}
+			if(line!=length-1)
+				sb.append('\n');
+		}
+    	return sb.toString();
 	}
 
 }

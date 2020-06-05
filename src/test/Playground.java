@@ -151,6 +151,7 @@ public class Playground
 		{
 			System.out.println(toString(potenzMatrizen[ma]));
 		}
+		System.out.println((char)(65+50));
 	}
 	public static String toString(int[][] matrix)
 	{

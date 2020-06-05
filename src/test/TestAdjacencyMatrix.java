@@ -36,34 +36,54 @@ public class TestAdjacencyMatrix
 		}
 		catch (MatrixException e){System.out.println(e.getMessage());}
 		try{
-			System.out.println("------------------");
-			SysMatrix(TestMatrices.matrix_8x8_3Component());
+			System.out.println("||||||||||||||||||||||||||||||||||");
+			toStringCsv(TestMatrices.matrix_8x8_3Component());
 			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_8x8_3Component());
 			System.out.println("------------------");
-			SysMatrix(aM.calculateDistanceMatrix());
+			toStringCsv(aM.calculateDistanceMatrix());
 		}catch (MatrixException e){System.out.println(e.getMessage());}
 		try{
-			System.out.println("------------------");
-			SysMatrix(TestMatrices.matrix_line(8));
-			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_line(8));
-			System.out.println("------------------");
-			SysMatrix(aM.calculateDistanceMatrix());
+		System.out.println("||||||||||||||||||||||||||||||||||");
+		AdjacencyMatrix aM = new AdjacencyMatrix(new int[6][6]);
+		System.out.println("------------------");
+		toStringCsv(aM.calculateDistanceMatrix());
 		}catch (MatrixException e){System.out.println(e.getMessage());}
 		try{
+			System.out.println("||||||||||||||||||||||||||||||||||");
+			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_random_line(6));
+			System.out.println(aM.toStringCsv());
 			System.out.println("------------------");
-			AdjacencyMatrix aM = new AdjacencyMatrix(new int[6][6]);
+			System.out.println(toStringCsv(aM.calculateDistanceMatrix()));			
+		}catch (MatrixException e){System.out.println(e.getMessage());}
+		
+		try{
+			System.out.println("||||||||||||||||||||||||||||||||||");
+			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_random_line(6));
+			System.out.println(aM.toStringCsv());
 			System.out.println("------------------");
-			SysMatrix(aM.calculateDistanceMatrix());
+
+			for (int i=1; i<=aM.getMatrix().length;i++)
+				System.out.println((i)+" = "+aM.toStringEdgesOfVortexTo(i));			
 		}catch (MatrixException e){System.out.println(e.getMessage());}
 
+
 	}
-	public static void SysMatrix(int [][] matrix)
-	{
-		for(int[] l:matrix)
+    public static String toStringCsv(int[][] matrix)
+    {
+    	int length = matrix.length;
+    	int digitsLength=length<10?1:length<100?2:3;
+    	StringBuilder sb = new StringBuilder((length*length)+length);
+		for (int line=0; line<length;line++)
 		{
-			for(int c:l)
-				System.out.print((String.format("%5d", c)));
-			System.out.println("\n\n");
+			String prefix = "";
+			sb.append(String.format("%-"+digitsLength+"d:",line+1));
+			for (int column=0; column<length;column++)
+			{
+				sb.append(String.format("%s%d",prefix, matrix[line][column]));
+				prefix=",";
+			}
+			sb.append('\n');
 		}
-	}
+    	return sb.toString();
+    }
 }
