@@ -14,7 +14,7 @@ public class Graph
 	private DistanceMatrix distanceMatrix;
 	private ReachAbilityMatrix reachabilityMatrix;
 	private String name;
-	private boolean[] cutVertices;
+	private int[] cutVertices;
 	
 	public Graph(String name) 
 	{
@@ -49,7 +49,7 @@ public class Graph
 	{
 		return name;
 	}
-	public boolean[] getCutVertices()
+	public int[] getCutVertices()
 	{
 		return cutVertices;
 	}
@@ -95,26 +95,26 @@ public class Graph
 	public void calculateCutVertices() throws GraphException, MatrixException
 	{
 		int length = reachabilityMatrix.getMatrix().length;
-		boolean[] isCutVertice = new boolean[length];
+		int[] isCutVertice = new int[length];
 		for (int vortex=0; vortex<length; vortex++)
 		{
 			if(new ReachAbilityMatrix(new DistanceMatrix(new AdjacencyMatrix(adjacencyMatrix.removeVortex(vortex)))).getComponents()[length-1]>reachabilityMatrix.getComponents()[length])
-				isCutVertice[vortex]=true;
+				isCutVertice[vortex]=vortex;
 			else
-				isCutVertice[vortex]=false;
+				isCutVertice[vortex]=0;
 		}
-//		for (int count=0; )
-		cutVertices = isCutVertice;
-////		-----------------
-//		int[] cutVertices = new int[4];
-//		for (int vortex=0; vortex<cutVertices.length;vortex++)
-//			if(cutVertices[vortex])
-//			{
-//				sb.append(prefix).append(vortex+1);
-//				prefix=",";
-//			}
-//		sb.append("}\n");
-//		return sb.toString();
+		int count=0;
+		for (int vortex=0; vortex<isCutVertice.length;vortex++)
+			if(isCutVertice[vortex]!=0)
+				count++;
+		cutVertices=new int[count];
+		count=0;
+		for (int vortex=0; vortex<isCutVertice.length;vortex++)
+			if(isCutVertice[vortex]!=0)
+			{
+				cutVertices[count]=isCutVertice[vortex];
+				count++;
+			}
 	}
 //	//work in progress!!!!!!!!!!!!!!!!!!!!!
 //	public void calculateBridges() throws GraphException, MatrixException
@@ -242,17 +242,17 @@ public class Graph
 		sb.append("}\n");
 		return sb.toString();
 	}
+	///needs to be changed after fix of cutVertices!!
 	public String toStringCutVertices()
 	{
 		StringBuilder sb = new StringBuilder();
 		String prefix="";
 		sb.append("Artikulationen = {");
-		for (int vortex=0; vortex<cutVertices.length;vortex++)
-			if(cutVertices[vortex])
-			{
-				sb.append(prefix).append(vortex+1);
-				prefix=",";
-			}
+		for (int vortex:cutVertices)
+		{
+			sb.append(prefix).append(vortex+1);
+			prefix=",";
+		}
 		sb.append("}\n");
 		return sb.toString();
 	}

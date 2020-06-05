@@ -48,7 +48,9 @@ public class TestGraph
 			if(gr.toStringCutVertices().equals(TestMatrices.matrix_4x4_1Component_Artikulationen()))
 				System.out.println("Artikulationen ok");
 			else
-				System.out.println("Artikulationen not ok");			
+				System.out.println("Artikulationen not ok");
+			System.out.println(gr.toStringCutVertices());
+			System.out.println(TestMatrices.matrix_4x4_1Component_Artikulationen());
 			System.out.println("Components: \n"+gr.toStringComponents());
 		} 
 		catch (Exception e){System.out.println(e.getMessage());	}
