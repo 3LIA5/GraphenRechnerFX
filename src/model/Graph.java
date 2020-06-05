@@ -116,16 +116,16 @@ public class Graph
 				count++;
 			}
 	}
-//	//work in progress!!!!!!!!!!!!!!!!!!!!!
-//	public void calculateBridges() throws GraphException, MatrixException
-//	{
-//		int length = reachabilityMatrix.getMatrix().length;
-//		ArrayList<int[]>bridges = new ArrayList<int[]>();
-//		for (int vortexX=0; vortexX<length; vortexX++)
-//			for (int vortexY=0; vortexY<length; vortexY++)
-//				if(new ReachAbilityMatrix(new DistanceMatrix(new AdjacencyMatrix(adjacencyMatrix.removeEdge(vortexX, vortexY)))).getComponents()[length-1]>reachabilityMatrix.getComponents()[length])
-//					bridges.add(new int[]{vortexX,vortexY});
-//	}
+//	//work in progress!!!!!!!!!!!!!!!!!!!!! und 2er Komponenten fehlen
+	public void calculateBridges() throws GraphException, MatrixException
+	{
+		int length = cutVertices.length;
+		ArrayList<int[]>bridges = new ArrayList<int[]>();
+		for (int x=0; x<length; x++)
+			for (int y=x+1; y<length; y++)
+				if(adjacencyMatrix.getMatrix()[cutVertices[x]][cutVertices[y]]==1)
+					bridges.add(new int[]{cutVertices[x],cutVertices[y]});
+	}
 	
 //	-------------------------other-----------------------
 	public void exportAdjazensmatirxCsv(String filename) throws GraphException
