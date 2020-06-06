@@ -15,6 +15,7 @@ public class Graph
 	private ReachAbilityMatrix reachabilityMatrix;
 	private String name;
 	private int[] cutVertices;
+	private int[][] bridges;
 	
 	public Graph(String name) 
 	{
@@ -116,15 +117,57 @@ public class Graph
 				count++;
 			}
 	}
-//	//work in progress!!!!!!!!!!!!!!!!!!!!! und 2er Komponenten fehlen
+//	//work in progress!!!!!!!!!!!!!!!!!!!!! 2er Komponenten sind doppelt??
 	public void calculateBridges() throws GraphException, MatrixException
 	{
 		int length = cutVertices.length;
-		ArrayList<int[]>bridges = new ArrayList<int[]>();
+		ArrayList<int[]>arrayBridges = new ArrayList<int[]>();
 		for (int x=0; x<length; x++)
 			for (int y=x+1; y<length; y++)
 				if(adjacencyMatrix.getMatrix()[cutVertices[x]][cutVertices[y]]==1)
-					bridges.add(new int[]{cutVertices[x],cutVertices[y]});
+				{
+					arrayBridges.add(new int[]{cutVertices[x],cutVertices[y]});
+				}
+		length=adjacencyMatrix.getMatrix().length;
+		int count;
+		int vortexY=-1;
+		for (int vortexX=0; vortexX<length;vortexX++)
+		{
+			count=0;
+			for (int column=0; column<length;column++)
+			{
+				if(adjacencyMatrix.getMatrix()[vortexX][column]==1)
+				{
+					count++;
+					vortexY=column;
+				}
+			}
+			if(count==1)
+			{
+				boolean iscutVertex = false;
+			    for (int i : cutVertices) 			  
+			        if (i == vortexX) 
+			        	iscutVertex = true;
+			    for (int i : cutVertices) 			  
+			        if (i == vortexY) 
+			        	iscutVertex = true;
+			    if(iscutVertex)
+			    {
+					if(vortexX>vortexY)
+						arrayBridges.add(new int[]{vortexY,vortexX});
+					else
+						arrayBridges.add(new int[]{vortexX,vortexY});
+			    }
+			    else
+			    	if(vortexX<vortexY)
+			    		arrayBridges.add(new int[]{vortexX,vortexY});
+			    
+			}
+			
+		}		
+		bridges = new int[arrayBridges.size()][];
+		for(int bridge=0; bridge<arrayBridges.size();bridge++)
+			bridges[bridge]=arrayBridges.get(bridge).clone();
 	}
 	
 //	-------------------------other-----------------------
@@ -251,6 +294,19 @@ public class Graph
 		for (int vortex:cutVertices)
 		{
 			sb.append(prefix).append(vortex+1);
+			prefix=",";
+		}
+		sb.append("}\n");
+		return sb.toString();
+	}
+	public String toStringBridges()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Brücken = {");
+		String prefix="";
+		for (int[] bridge:bridges)
+		{
+			sb.append(prefix).append(String.format("[%d,%d]",bridge[0]+1,bridge[1]+1));
 			prefix=",";
 		}
 		sb.append("}\n");

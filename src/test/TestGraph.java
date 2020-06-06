@@ -49,9 +49,16 @@ public class TestGraph
 				System.out.println("Artikulationen ok");
 			else
 				System.out.println("Artikulationen not ok");
-			System.out.println(gr.toStringCutVertices());
-			System.out.println(TestMatrices.matrix_4x4_1Component_Artikulationen());
 			System.out.println("Components: \n"+gr.toStringComponents());
+			System.out.println(gr.toStringCutVertices());
+			gr.calculateBridges();
+			if(gr.toStringBridges().equals(TestMatrices.matrix_4x4_1Component_Bruecken()))
+				System.out.println("Brücken ok");
+			else
+				System.out.println("Brücken not ok");
+			System.out.println(gr.toStringBridges());
+			System.out.println(TestMatrices.matrix_4x4_1Component_Bruecken());
+			
 		} 
 		catch (Exception e){System.out.println(e.getMessage());	}
 
@@ -66,7 +73,9 @@ public class TestGraph
 			gr.setWegmatrix();
 			System.out.println(gr.getReachabilityMatrix());
 			gr.calculateCutVertices();
-			System.out.print(gr.toStringCutVertices());			
+			System.out.print(gr.toStringCutVertices());	
+			gr.calculateBridges();
+			System.out.println(gr.toStringBridges());
 			System.out.print(gr.getReachabilityMatrix().getComponents()[4]+" Components: \n"+gr.toStringComponents());
 		} 
 		catch (Exception e){System.out.println(e.getMessage());	}
@@ -100,6 +109,9 @@ public class TestGraph
 			gr.calculateCutVertices();
 			System.out.print(gr.toStringCutVertices());			
 			System.out.print(gr.getReachabilityMatrix().getComponents()[10]+" Components: \n"+gr.toStringComponents());
+			gr.calculateBridges();
+			System.out.println(gr.toStringBridges());
+			
 		} 
 		catch (Exception e){System.out.println(e.getMessage());	}
 
@@ -116,6 +128,8 @@ public class TestGraph
 			gr.calculateCutVertices();
 			System.out.print(gr.toStringCutVertices());			
 			System.out.print(gr.getReachabilityMatrix().getComponents()[10]+" Components: \n"+gr.toStringComponents());
+			gr.calculateBridges();
+			System.out.println(gr.toStringBridges());
 		} 
 		catch (Exception e){System.out.println(e.getMessage());	} 
 //		try
