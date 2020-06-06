@@ -55,24 +55,28 @@ public abstract class Matrix implements Serializable
 //	---------------------------- toString  ------------------------------------------	
 	public String toString()
 	{
+    	return toString(2);
+	}
+	public String toString(int spacing)
+	{
+		if(spacing<=0)
+			spacing=2;
     	int length = matrix.length;
     	int digitsLength=length<10?1:length<100?2:3;
     	StringBuilder sb = new StringBuilder(((length+3)*(length+1))+length);
     	sb.append(getClass().getSimpleName()).append('\n');
 		for (int line=0; line<length;line++)
 		{
-			String prefix = "";
-			sb.append(String.format("%-"+digitsLength+"d:",line+1));
+			sb.append(String.format("%"+digitsLength+"d:",line+1));
 			for (int column=0; column<length;column++)
 			{
-				sb.append(String.format("%s%d",prefix, matrix[line][column]));
-				prefix=",";
+				sb.append(String.format("%"+spacing+"d",matrix[line][column]));
 			}
 			if(line!=length-1)
 				sb.append('\n');
 		}
     	return sb.toString();
-	}	
+	}
     public String toStringCsv()
     {
     	int length = matrix.length;
