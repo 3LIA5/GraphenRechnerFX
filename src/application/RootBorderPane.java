@@ -16,11 +16,10 @@ import model.*;
 public class RootBorderPane extends BorderPane
 {
 	private MenuBar menuBar;
-	private Menu mDatei, mBerechnen, mAnsicht, mHilfe;
+	private Menu mDatei, mBerechnen, mAnsicht, mMatrix, mEigenschaften, mHilfe;
 	private MenuItem miNeu, miLaden, miSpeichern, miImportAdjazensmatrixCsv, miExportieren, miBeenden,
 					 miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten,
-					 miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht, miEigenschaften,
-					 miUeber;
+					 miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht, miUeber;
 	private Graph graph;
 	private TextArea viewMatrix;
 	private TextArea viewStats;
@@ -31,6 +30,7 @@ public class RootBorderPane extends BorderPane
 		addComponents();
 		addHandlers();
 		initModel();
+		disableComponents(true);
 	}
 	private void initComponents()
 	{
@@ -38,53 +38,44 @@ public class RootBorderPane extends BorderPane
 		
 		mDatei = new Menu("Datei");
 		mBerechnen = new Menu("Berechnungen");
+			mBerechnen.setVisible(false);
 		mAnsicht = new Menu("Ansicht");
 		mHilfe = new Menu("Hilfe");
 		
 		miNeu = new MenuItem("Neu");
+			miNeu.setDisable(true);
 		miLaden = new MenuItem("Laden");
+			miLaden.setDisable(true);
 		miSpeichern = new MenuItem("Speichern");
+			miSpeichern.setDisable(true);
 		miImportAdjazensmatrixCsv = new MenuItem("csv Import");
 		miExportieren = new MenuItem("csv Export");
 		miBeenden = new MenuItem("Beenden");
-		miNeu.setDisable(true);
-		miLaden.setDisable(true);
-		miSpeichern.setDisable(true);
-		miImportAdjazensmatrixCsv.setDisable(false);
-		miExportieren.setDisable(true);
-		miBeenden.setDisable(false);
 		
+		mMatrix  = new Menu("Matrix");
 		miDistanzmatrix = new MenuItem("Distanzmatrix");
 		miWegmatrix = new MenuItem("Wegmatrix");
 		miArtikulationen = new MenuItem("Artikulationen");
 		miBruecken = new MenuItem("Bruecken");
 		miKomponenten = new MenuItem("Komponenten");
-		miDistanzmatrix.setDisable(false);
-		miWegmatrix.setDisable(false);
-		miArtikulationen.setDisable(true);
-		miBruecken.setDisable(true);
-		miKomponenten.setDisable(true);
+
 		
 		miAdjazensmatrixAnsicht = new MenuItem("Adjazensmatrix");
 		miDistanzmatrixAnsicht = new MenuItem("Distanzmatrix");
 		miWegmatrixAnsicht = new MenuItem("Wegmatrix");
-		miEigenschaften = new MenuItem("Eigenschaften");
-		miAdjazensmatrixAnsicht.setDisable(false);
-		miDistanzmatrixAnsicht.setDisable(false);
-		miWegmatrixAnsicht.setDisable(false);
-		miEigenschaften.setDisable(true);
+		mEigenschaften = new Menu("Eigenschaften");
 		
 		miUeber = new MenuItem("Über");
 		
-//		uebersicht = new MatrixUebersicht();
 		viewMatrix = new TextArea();
 			viewMatrix.setFont(Font.font("Consolas", 12));
 			viewMatrix.setEditable(false);
-		viewStats = new TextArea();
-			viewStats.setFont(Font.font("Consolas", 12));
-			viewStats.setEditable(false);
+//		viewStats = new TextArea();
+//			viewStats.setFont(Font.font("Consolas", 12));
+//			viewStats.setEditable(false);
+//			viewStats.setVisible(false);
 //			viewStats.prefWidthProperty().bind(this.widthProperty());
-			viewStats.setMaxWidth(150);
+//			viewStats.setMaxWidth(150);
 	}
 	private void initModel()
 	{
@@ -98,7 +89,8 @@ public class RootBorderPane extends BorderPane
 		
 		mDatei.getItems().addAll(miNeu, miLaden, miSpeichern, new SeparatorMenuItem(), miImportAdjazensmatrixCsv, miExportieren, new SeparatorMenuItem(), miBeenden);
 		mBerechnen.getItems().addAll(miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten);
-		mAnsicht.getItems().addAll(miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht, miEigenschaften);
+		mAnsicht.getItems().addAll(mMatrix, mEigenschaften);
+			mMatrix.getItems().addAll(miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht);
 		mHilfe.getItems().addAll(miUeber);
 		
 		setCenter(viewMatrix);
@@ -116,24 +108,32 @@ public class RootBorderPane extends BorderPane
 		miUeber.setOnAction(event -> ueber() );	
 		
 	}
+	
+	public void disableComponents(boolean disabled)
+	{
+		mMatrix.setDisable(disabled);
+		mEigenschaften.setDisable(disabled);
+		miExportieren.setDisable(disabled);
+		
+	}
 //-------------------------------------- Handler-Methoden ---------------------------	
 	private void viewMatrix(Matrix matrix)
 	{
 		if (matrix==null)
-			Main.showAlert(AlertType.ERROR, "Null Ref. : no Matrix available!");
+			viewMatrix.setText("\n - matrix not available -");
 		viewMatrix.setText(matrix.toString());
 	}
 	private void importAdjazensmatrixCsv()
 	{
 		FileChooser fc = new FileChooser();
 		fc.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
-		File selected = fc.showOpenDialog(null);  // modal
+		File selected = fc.showOpenDialog(null);
 		if (selected != null)
 		{
 			try
 			{
 				graph.importMatrixCsv(selected.getAbsolutePath(),",");
-//				ansichtMatrix(graph.getAdjazensmatirx());
+				viewMatrix(graph.getAdjazensmatirx());
 //				disableComponents(false);
 			}
 			catch (GraphException e)
@@ -154,9 +154,9 @@ public class RootBorderPane extends BorderPane
 		{
 			graph.setDistanztrix();
 			viewMatrix(graph.getDistanceMatrix());
-			viewStats.appendText(graph.radiusToString());
-			viewStats.appendText(graph.diameterToString());
-			viewStats.appendText(graph.centreToString());
+			viewStats.appendText(graph.toStringRadius());
+			viewStats.appendText(graph.toStringDiameter());
+			viewStats.appendText(graph.toStringCentre());
 		} 
 		catch (MatrixException e) 
 		{
@@ -167,7 +167,7 @@ public class RootBorderPane extends BorderPane
 	{
 		try 
 		{
-			graph.setWegmatrix();
+			graph.setReachAbilityMatrix();
 			viewMatrix(graph.getReachabilityMatrix());
 			viewStats.appendText(graph.toStringComponents());
 		} 

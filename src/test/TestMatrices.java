@@ -101,159 +101,113 @@ public class TestMatrices
 					{0,1,0,0}
 				};
 	}
+//	--------------------------------------------------------------------------------------------
 	public static int[][] matrix_4x4_1Component()
-	{ 
-		return 
-			new int[][] 
-				{
-					{0,0,1,0},
-					{0,0,1,1},
-					{1,1,0,0},
-					{0,1,0,0}
-				};
-	}
+	{return	new int[][]{{0,0,1,0},
+						{0,0,1,1},
+						{1,1,0,0},
+						{0,1,0,0}};}
 	public static int[][] matrix_4x4_1Component_DistanceMatrix()
-	{ 
-		return 
-			new int[][] 
-				{
-					{0,2,1,3},
-					{2,0,1,1},
-					{1,1,0,2},
-					{3,1,2,0}
-				};
-	}
+	{return new int[][]{{0,2,1,3},
+						{2,0,1,1},
+						{1,1,0,2},
+						{3,1,2,0}};}
 	public static int[][] matrix_4x4_1Component_ReachAbilityMatrix()
-	{ 
-		return 
-			new int[][] 
-				{
-					{1,1,1,1},
-					{1,1,1,1},
-					{1,1,1,1},
-					{1,1,1,1}
-				};
-	}
-	public static String matrix_4x4_1Component_durchmesser()
-	{
-		return new String("diameter = 3\n");
-	}
-	public static String matrix_4x4_1Component_radius()
-	{
-		return new String("radius = 2\n");
-	}
-	public static String matrix_4x4_1Component_Zentrum()
-	{
-		return new String("centre = {2,3}\n");
-	}
-	public static String matrix_4x4_1Component_Bruecken()
-	{
-		return new String("Brücken = {[1,3],[2,3],[2,4]}\n") ;
-	}
-	public static String matrix_4x4_1Component_Artikulationen()
-	{
-		return new String("Artikulationen = {2,3}\n") ;
-	}
+	{return	new int[][]{{1,1,1,1},
+						{1,1,1,1},
+						{1,1,1,1},
+						{1,1,1,1}};}
+	public static String matrix_4x4_1Component_durchmesser()   {return new String(      "diameter = 3\n");}
+	public static String matrix_4x4_1Component_radius()        {return new String(        "radius = 2\n");}
+	public static String matrix_4x4_1Component_Zentrum()       {return new String(        "centre = {2,3}\n");}
+	public static String matrix_4x4_1Component_Bruecken()      {return new String(       "Brücken = {[1,3],[2,3],[2,4]}\n");}
+	public static String matrix_4x4_1Component_Artikulationen(){return new String("Artikulationen = {2,3}\n") ;}
 				
+	
 	public static int[][] matrix_4x4_3Component()
-	{ 
-		return
-			new int[][] 
-			{
-				{0,0,0,0},
-				{0,0,1,0},
-				{0,1,0,0},
-				{0,0,0,0}
-			};	
-	}
+	{return	new int[][]{{0,0,0,0},
+						{0,0,1,0},
+						{0,1,0,0},
+						{0,0,0,0}};}
+	public static String matrix_4x4_3Component_durchmesser()   {return new String(      "diameter = n\\a\n");}
+	public static String matrix_4x4_3Component_radius()        {return new String(        "radius = n\\a\n");}
+	public static String matrix_4x4_3Component_Zentrum()       {return new String(        "centre = n\\a\n");}
+	public static String matrix_4x4_3Component_Bruecken()      {return new String(       "Brücken = {[2,3]}\n");}
+	public static String matrix_4x4_3Component_Artikulationen(){return new String("Artikulationen = {}\n") ;}
+	
 	public static int[][] matrix_8x8_1Component()
-	{ 
-		return
-			new int[][] 
-			{
-				{0,1,0,1,0,1,0,0},
-				{1,0,1,0,0,1,1,0},
-				{0,1,0,0,0,0,0,0},
-				{1,0,0,0,1,0,0,0},
-				{0,0,0,1,0,1,0,0},
-				{1,1,0,0,1,0,0,1},
-				{0,1,0,0,0,0,0,1},
-				{0,0,0,0,0,1,1,0}
-			};
-	}
+                       /*1,2,3,4,5,6,7,8*/
+	{return	new int[][]{{0,1,0,1,0,1,0,0},
+						{1,0,1,0,0,1,1,0},
+						{0,1,0,0,0,0,0,0},
+						{1,0,0,0,1,0,0,0},
+						{0,0,0,1,0,1,0,0},
+						{1,1,0,0,1,0,0,1},
+						{0,1,0,0,0,0,0,1},
+						{0,0,0,0,0,1,1,0}};}
+	public static String matrix_8x8_1Component_durchmesser()   {return new String(      "diameter = 3\n");}
+	public static String matrix_8x8_1Component_radius()        {return new String(        "radius = 2\n");}
+	public static String matrix_8x8_1Component_Zentrum()       {return new String(        "centre = {1,2,6}\n");}
+	public static String matrix_8x8_1Component_Bruecken()      {return new String(       "Brücken = {[2,3]}\n");}
+	public static String matrix_8x8_1Component_Artikulationen(){return new String("Artikulationen = {2}\n") ;}
+	
+	
 	public static int[][] matrix_8x8_3Component()
-	{ 
-		return 
-			new int[][] 
-			{	
-				{0,1,0,1,0,0,0,0},
-				{1,0,0,0,1,0,0,0},
-				{0,0,0,0,0,1,0,0},
-				{1,0,0,0,1,0,0,0},
-				{0,1,0,1,0,0,0,0},
-				{0,0,1,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1},
-				{0,0,0,0,0,0,1,0}
-			};
-	}
+	{return	new int[][]{{0,0,0,1,1,0,0,0},
+						{0,0,0,0,0,0,0,0},
+						{0,0,0,0,0,1,0,0},
+						{1,0,0,0,1,0,1,0},
+						{1,0,0,1,0,0,0,0},
+						{0,0,1,0,0,0,0,0},
+						{0,0,0,1,0,0,0,1},
+						{0,0,0,0,0,0,1,0}};}
+	public static String matrix_8x8_3Component_durchmesser()   {return new String(      "diameter = n\\a\n");}
+	public static String matrix_8x8_3Component_radius()        {return new String(        "radius = n\\a\n");}
+	public static String matrix_8x8_3Component_Zentrum()       {return new String(        "centre = n\\a\n");}
+	public static String matrix_8x8_3Component_Bruecken()      {return new String(       "Brücken = {[3,6],[4,7],[7,8]}\n");}
+	public static String matrix_8x8_3Component_Artikulationen(){return new String("Artikulationen = {4,7}\n") ;}
+	
 	public static int[][] matrix_8x8_4Component()
-	{ 
-		return 
-			new int[][] 
-			{	
-				{0,1,0,1,0,0,0,0},
-				{1,0,0,1,0,0,0,0},
-				{0,0,0,0,0,1,0,0},
-				{1,1,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0},
-				{0,0,1,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1},
-				{0,0,0,0,0,0,1,0}
-			};
-	}
+	{return	new int[][]{{0,1,0,1,0,0,0,0},
+						{1,0,0,1,0,0,0,0},
+						{0,0,0,0,0,1,0,0},
+						{1,1,0,0,0,0,0,0},
+						{0,0,0,0,0,0,0,0},
+						{0,0,1,0,0,0,0,0},
+						{0,0,0,0,0,0,0,1},
+						{0,0,0,0,0,0,1,0}};}
+	
 	public static int[][] matrix_8x8b()
-	{ 
-		return
-			new int[][] 
-			{
-				{0,1,1,1,0,0,0,0},
-				{1,0,0,0,1,0,0,0},
-				{1,0,0,0,0,1,0,0},
-				{1,0,0,0,1,1,1,0},
-				{0,1,0,1,0,0,1,1},
-				{0,0,1,1,0,0,1,1},
-				{0,0,0,1,1,1,0,1},
-				{0,0,0,0,1,1,1,0}
-			};
-	}
+	{return	new int[][]{{0,1,1,1,0,0,0,0},
+						{1,0,0,0,1,0,0,0},
+						{1,0,0,0,0,1,0,0},
+						{1,0,0,0,1,1,1,0},
+						{0,1,0,1,0,0,1,1},
+						{0,0,1,1,0,0,1,1},
+						{0,0,0,1,1,1,0,1},
+						{0,0,0,0,1,1,1,0}};}
+	
 	public static int[][] matrix_15x15_A()
-	{ 
-		return 
-			new int[][] 
-			{
-				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O}*/
-				/*A*/{0,1,0,0,0,1,1,0,0,1,0,0,0,0,0},
-				/*B*/{1,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*C*/{0,1,0,0,0,0,0,0,1,0,0,0,0,0,0},
-				/*D*/{0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
-				/*E*/{0,0,0,1,0,0,0,0,1,0,0,0,0,0,0},
-				/*F*/{1,0,0,0,0,0,1,0,0,0,1,1,0,0,0},
-				/*G*/{1,0,0,1,0,1,0,0,0,0,1,0,1,0,1},
-				/*H*/{0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
-				/*I*/{0,0,1,0,1,0,0,1,0,0,0,0,1,0,0},
-				/*J*/{1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
-				/*K*/{0,0,0,0,0,1,1,0,0,0,0,0,0,0,0},
-				/*L*/{0,0,0,0,0,1,0,0,0,0,0,0,1,0,0},
-				/*M*/{0,0,0,0,0,0,1,0,1,0,0,1,0,1,0},
-				/*N*/{0,0,0,0,0,0,0,0,0,1,0,0,1,0,0},
-				/*O*/{0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}
-			};
-	}
+	{return new int[][]{
+					/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O}*/
+					/*A*/{0,1,0,0,0,1,1,0,0,1,0,0,0,0,0},
+					/*B*/{1,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+					/*C*/{0,1,0,0,0,0,0,0,1,0,0,0,0,0,0},
+					/*D*/{0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
+					/*E*/{0,0,0,1,0,0,0,0,1,0,0,0,0,0,0},
+					/*F*/{1,0,0,0,0,0,1,0,0,0,1,1,0,0,0},
+					/*G*/{1,0,0,1,0,1,0,0,0,0,1,0,1,0,1},
+					/*H*/{0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
+					/*I*/{0,0,1,0,1,0,0,1,0,0,0,0,1,0,0},
+					/*J*/{1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+					/*K*/{0,0,0,0,0,1,1,0,0,0,0,0,0,0,0},
+					/*L*/{0,0,0,0,0,1,0,0,0,0,0,0,1,0,0},
+					/*M*/{0,0,0,0,0,0,1,0,1,0,0,1,0,1,0},
+					/*N*/{0,0,0,0,0,0,0,0,0,1,0,0,1,0,0},
+					/*O*/{0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}};}
+	
 	public static int[][] matrix_25x25_B()
-	{ 
-		return 
-			new int[][] 
-			{
+	{return new int[][]{
 				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}*/
 				/*A*/{0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				/*B*/{1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -280,64 +234,50 @@ public class TestMatrices
 				/*W*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1},
 				/*X*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
 				/*Y*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0}
-				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}*/
-			};
-	}
-	public static String matrix_25x25_B_durchmesser()
-	{
-		return new String("diameter = 7\n");
-	}
-	public static String matrix_25x25_B_radius()
-	{
-		return new String("radius = 4\n");
-	}
-	public static String matrix_25x25_B_Zentrum()
-	{
-		return new String("centre = {9,18}\n");
-	}
-	public static String matrix_25x25_B_Bruecken()
-	{
-		return new String("Brücken = {}\n") ;
-	}
-	public static String matrix_25x25_B_Artikulationen()
-	{
-		return new String("Artikulationen = {9,23}\n") ;
-	}
+				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y}*/};}
+	public static String matrix_25x25_B_durchmesser()   {return new String(      "diameter = 7\n");}
+	public static String matrix_25x25_B_radius()        {return new String(        "radius = 4\n");}
+	public static String matrix_25x25_B_Zentrum()       {return new String(        "centre = {9,18}\n");}
+	public static String matrix_25x25_B_Bruecken()      {return new String(       "Brücken = {}\n");}
+	public static String matrix_25x25_B_Artikulationen(){return new String("Artikulationen = {9,23}\n") ;}
+
 	public static int[][] matrix_26x26_C()
-	{ 
-		return 
-			new int[][] 
-			{
-				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
-				/*A*/{0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*B*/{1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*C*/{0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*D*/{0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*E*/{0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*F*/{0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*G*/{0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-				/*H*/{1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-				/*I*/{0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*J*/{0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*K*/{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*L*/{0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*M*/{0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0},
-				/*N*/{0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0},
-				/*O*/{0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0},
-				/*P*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0},
-				/*Q*/{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				/*R*/{0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
-				/*S*/{0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
-				/*T*/{0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0},
-				/*U*/{0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0},
-				/*V*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0},
-				/*W*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
-				/*X*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0},
-				/*Y*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1},
-				/*Z*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}
-				/*   {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
-			};
-	}
+	{return	new int[][]{
+				/*     {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/
+				/* 1A*/{0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/* 2B*/{1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/* 3C*/{0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/* 4D*/{0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/* 5E*/{0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/* 6F*/{0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+				/* 7G*/{0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+				/* 8H*/{1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+				/* 9I*/{0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/*10J*/{0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/*11K*/{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0},
+				/*12L*/{0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/*13M*/{0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0},
+				/*14N*/{0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0},
+				/*15O*/{0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0},
+				/*16P*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0},
+				/*17Q*/{0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				/*18R*/{0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+				/*19S*/{0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+				/*20T*/{0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0},
+				/*21U*/{0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0},
+				/*22V*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0},
+				/*23W*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+				/*24X*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0},
+				/*25Y*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1},
+				/*26Z*/{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}
+				/*     {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}*/};}
+	public static String matrix_26x26_C_durchmesser()   {return new String(      "diameter = 14\n");}
+	public static String matrix_26x26_C_radius()        {return new String(        "radius = 7\n");}
+	public static String matrix_26x26_C_Zentrum()       {return new String(        "centre = {11}\n");}
+	public static String matrix_26x26_C_Bruecken()      {return new String(       "Brücken = {[2,3],[3,4],[4,10],[5,11],[5,12],[8,17],[10,11],[12,13],[22,23],[25,26]}\n");}
+	public static String matrix_26x26_C_Artikulationen(){return new String("Artikulationen = {2,3,4,5,8,10,11,12,13,22,25}\n") ;}
+	
+	
 	public static int[][] matrix_line(int size)
 	{ 
 		int[][] matrix_line = new int[size][size];

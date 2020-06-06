@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Graph 
 {
@@ -27,7 +28,10 @@ public class Graph
 	}
 	
 //	-------------------------getter-----------------------
-
+	public String getName() 
+	{
+		return name;
+	}
 	public AdjacencyMatrix getAdjazensmatirx()
 	{
 //		if (adjacencyMatrix==null)
@@ -42,37 +46,8 @@ public class Graph
 	}
 	public DistanceMatrix getDistanceMatrix()
 	{
-//		if (distanceMatrix==null)
-//			throw new GraphException("no distance Matrix available!");
 		return distanceMatrix;
 	}
-	public String getName() 
-	{
-		return name;
-	}
-	public int[] getCutVertices()
-	{
-		return cutVertices;
-	}
-
-//	-------------------------setter-----------------------
-	public void setAdjacencyMatrix(AdjacencyMatrix adjacencyMatrix) 
-	{
-		this.adjacencyMatrix = adjacencyMatrix;
-	}
-	public void setDistanztrix() throws MatrixException 
-	{
-		distanceMatrix = new DistanceMatrix(adjacencyMatrix);
-	}
-	public void setWegmatrix() throws MatrixException 
-	{
-		reachabilityMatrix = new ReachAbilityMatrix(distanceMatrix);
-	}	
-	public void setName(String name) 
-	{
-		this.name = name;
-	}
-//	------------------------- calculations -----------------------	
 	public int getRadius()
 	{
 		return Arrays.stream(distanceMatrix.getSummary()).summaryStatistics().getMin();
@@ -92,8 +67,32 @@ public class Graph
 		return centre.stream().mapToInt(i->i).toArray();
 		//Info: compiler does: mapToInt( (Integer i) -> i.intValue() ) 
 	}
-
-	public void calculateCutVertices() throws GraphException, MatrixException
+	public int[] getCutVertices()
+	{
+		return cutVertices;
+	}
+	public int[][] getBridges()
+	{
+		return bridges;
+	}
+//	-------------------------setter-----------------------
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	public void setAdjacencyMatrix(AdjacencyMatrix adjacencyMatrix) 
+	{
+		this.adjacencyMatrix = adjacencyMatrix;
+	}
+	public void setDistanztrix() throws MatrixException 
+	{
+		distanceMatrix = new DistanceMatrix(adjacencyMatrix);
+	}
+	public void setReachAbilityMatrix() throws MatrixException 
+	{
+		reachabilityMatrix = new ReachAbilityMatrix(distanceMatrix);
+	}
+	public void setCutVertices() throws GraphException, MatrixException
 	{
 		int length = reachabilityMatrix.getMatrix().length;
 		int[] isCutVertice = new int[length];
@@ -117,8 +116,7 @@ public class Graph
 				count++;
 			}
 	}
-//	//work in progress!!!!!!!!!!!!!!!!!!!!! 2er Komponenten sind doppelt??
-	public void calculateBridges() throws GraphException, MatrixException
+	public void setBridges() throws GraphException, MatrixException
 	{
 		int length = cutVertices.length;
 		ArrayList<int[]>arrayBridges = new ArrayList<int[]>();
@@ -145,9 +143,10 @@ public class Graph
 			if(count==1)
 			{
 				boolean iscutVertex = false;
-			    for (int i : cutVertices) 			  
-			        if (i == vortexX) 
-			        	iscutVertex = true;
+//			    for (int i : cutVertices) 			  
+//			        if (i == vortexX) 
+//			        	iscutVertex = true;
+				// if(components==1)
 			    for (int i : cutVertices) 			  
 			        if (i == vortexY) 
 			        	iscutVertex = true;
@@ -168,8 +167,8 @@ public class Graph
 		bridges = new int[arrayBridges.size()][];
 		for(int bridge=0; bridge<arrayBridges.size();bridge++)
 			bridges[bridge]=arrayBridges.get(bridge).clone();
+		Arrays.sort(bridges, Comparator.comparingInt(o -> o[0]));
 	}
-	
 //	-------------------------other-----------------------
 	public void exportAdjazensmatirxCsv(String filename) throws GraphException
 	{
@@ -260,15 +259,15 @@ public class Graph
 		}
 		return sbComponents.toString();
 	}
-	public String radiusToString()
+	public String toStringRadius()
 	{
 		return new String("radius = "+getRadius()+'\n');
 	}
-	public String diameterToString()
+	public String toStringDiameter()
 	{
 		return new String("diameter = "+getDiameter()+'\n');
 	}
-	public String centreToString()
+	public String toStringCentre()
 	{
 		int radius = getRadius();
 		StringBuilder sb = new StringBuilder();
@@ -285,7 +284,6 @@ public class Graph
 		sb.append("}\n");
 		return sb.toString();
 	}
-	///needs to be changed after fix of cutVertices!!
 	public String toStringCutVertices()
 	{
 		StringBuilder sb = new StringBuilder();
