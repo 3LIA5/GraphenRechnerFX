@@ -245,7 +245,9 @@ public class Graph
 	public String toStringComponents() throws MatrixException
 	{
 		int[] components = reachabilityMatrix.getComponents();
+		int countComponents = components[components.length-1]; 
 		StringBuilder sbComponents = new StringBuilder();
+		sbComponents.append(countComponents+" Component"+(countComponents==1?"":'s')+":\n");
 		StringBuilder sbVortex;
 		StringBuilder sbEdges;
 		String prefix;
@@ -266,20 +268,26 @@ public class Graph
 				}
 				
 			}
-			sbComponents.append("K"+component+"= ({").append(sbVortex.toString()).append("},{").append(sbEdges.toString()).append("})\n");
+			sbComponents.append("C"+component+"= ({").append(sbVortex.toString()).append("},{").append(sbEdges.toString()).append("})\n");
 		}
 		return sbComponents.toString();
 	}
 	public String toStringRadius()
 	{
+		if(reachabilityMatrix.getComponents()[reachabilityMatrix.getComponents().length-1]!=1)
+			return new String("radius = "+"non sequitur"+'\n');
 		return new String("radius = "+getRadius()+'\n');
 	}
 	public String toStringDiameter()
 	{
+		if(reachabilityMatrix.getComponents()[reachabilityMatrix.getComponents().length-1]!=1)
+			return new String("diameter = "+"non sequitur"+'\n');
 		return new String("diameter = "+getDiameter()+'\n');
 	}
 	public String toStringCentre()
 	{
+		if(reachabilityMatrix.getComponents()[reachabilityMatrix.getComponents().length-1]!=1)
+			return new String("centre = "+"non sequitur"+'\n');
 		int radius = getRadius();
 		StringBuilder sb = new StringBuilder();
 		sb.append("centre = {");

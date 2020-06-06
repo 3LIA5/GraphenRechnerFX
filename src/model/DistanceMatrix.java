@@ -75,5 +75,10 @@ public class DistanceMatrix extends Matrix
 		return true;
 	}
 //	---------------------------- toString  ------------------------------------------
-	
+	public String toString()
+	{
+		int diameter=Arrays.stream(summary).summaryStatistics().getMax();
+	    int spacer=diameter<10?2:diameter<100?3:4;
+		return super.toString(spacer);
+	}
 }

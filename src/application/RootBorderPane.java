@@ -23,7 +23,7 @@ public class RootBorderPane extends BorderPane
 					 miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten,  
 					 miUeber;
 	private Graph graph;
-	private TextArea viewMatrix;
+	private TextArea textAreaCenter;
 	private TextArea viewStats;
 	
 	public RootBorderPane()
@@ -73,9 +73,9 @@ public class RootBorderPane extends BorderPane
 			miViewAll = new MenuItem("Alle");
 		miUeber = new MenuItem("Über");
 		
-		viewMatrix = new TextArea();
-			viewMatrix.setFont(Font.font("Consolas", 12));
-			viewMatrix.setEditable(false);
+		textAreaCenter = new TextArea();
+			textAreaCenter.setFont(Font.font("Consolas", 12));
+			textAreaCenter.setEditable(false);
 //		viewStats = new TextArea();
 //			viewStats.setFont(Font.font("Consolas", 12));
 //			viewStats.setEditable(false);
@@ -100,7 +100,7 @@ public class RootBorderPane extends BorderPane
 			mEigenschaften.getItems().addAll(miViewRadiusDiameterCentre, miViewCutVertices, miViewBridges, miViewComponents, miViewAll);
 		mHilfe.getItems().addAll(miUeber);
 		
-		setCenter(viewMatrix);
+		setCenter(textAreaCenter);
 		setLeft(viewStats);
 	}
 	private void addHandlers()
@@ -138,6 +138,14 @@ public class RootBorderPane extends BorderPane
 			try
 			{
 				graph.importMatrixCsv(selected.getAbsolutePath(),",",true);
+//				textAreaCenter.setText("** calculating distance matrix\n");
+//				graph.setDistanztrix();
+//				textAreaCenter.appendText("** calculating reachability matrix\n");
+//				graph.setReachAbilityMatrix();
+//				textAreaCenter.appendText("** calculating cut-vertices\n");
+//				graph.setCutVertices();
+//				textAreaCenter.appendText("** calculating bridges");
+//				graph.setBridges();
 				viewMatrix(graph.getAdjazensmatirx());
 				disableComponents(false);
 			}
@@ -157,28 +165,28 @@ public class RootBorderPane extends BorderPane
 	private void viewMatrix(Matrix matrix)
 	{
 		if (matrix==null)
-			viewMatrix.setText("\n - matrix not available -");
-		viewMatrix.setText(matrix.toString());
+			textAreaCenter.setText("\n - matrix not available -");
+		textAreaCenter.setText(matrix.toString());
 	}
 	private void viewRadiusDiameterCentre()
 	{
-		viewMatrix.setText(graph.toStringRadius());
-		viewMatrix.appendText(graph.toStringDiameter());
-		viewMatrix.appendText(graph.toStringCentre());
+		textAreaCenter.setText(graph.toStringRadius());
+		textAreaCenter.appendText(graph.toStringDiameter());
+		textAreaCenter.appendText(graph.toStringCentre());
 	}
 	private void viewCutVertices()
 	{
-		viewMatrix.setText(graph.toStringCutVertices());
+		textAreaCenter.setText(graph.toStringCutVertices());
 	}
 	private void viewBridges()
 	{
-		viewMatrix.setText(graph.toStringBridges());
+		textAreaCenter.setText(graph.toStringBridges());
 	}
 	private void viewComponents()
 	{
 		try
 		{
-			viewMatrix.setText(graph.toStringComponents());
+			textAreaCenter.setText(graph.toStringComponents());
 		} 
 		catch (MatrixException e) 
 		{
@@ -189,12 +197,12 @@ public class RootBorderPane extends BorderPane
 	{
 		try
 		{
-			viewMatrix.setText(graph.toStringRadius());
-			viewMatrix.appendText(graph.toStringDiameter());
-			viewMatrix.appendText(graph.toStringCentre());
-			viewMatrix.appendText(graph.toStringCutVertices());
-			viewMatrix.appendText(graph.toStringBridges());
-			viewMatrix.appendText(graph.toStringComponents());
+			textAreaCenter.setText(graph.toStringRadius());
+			textAreaCenter.appendText(graph.toStringDiameter());
+			textAreaCenter.appendText(graph.toStringCentre());
+			textAreaCenter.appendText(graph.toStringCutVertices());
+			textAreaCenter.appendText(graph.toStringBridges());
+			textAreaCenter.appendText(graph.toStringComponents());
 		} 		
 		catch (MatrixException e) 
 		{

@@ -129,9 +129,9 @@ public class TestMatrices
 						{0,0,1,0},
 						{0,1,0,0},
 						{0,0,0,0}};}
-	public static String matrix_4x4_3Component_durchmesser()   {return new String(      "diameter = n\\a\n");}
-	public static String matrix_4x4_3Component_radius()        {return new String(        "radius = n\\a\n");}
-	public static String matrix_4x4_3Component_Zentrum()       {return new String(        "centre = n\\a\n");}
+	public static String matrix_4x4_3Component_durchmesser()   {return new String(      "diameter = non sequitur\n");}
+	public static String matrix_4x4_3Component_radius()        {return new String(        "radius = non sequitur\n");}
+	public static String matrix_4x4_3Component_Zentrum()       {return new String(        "centre = non sequitur\n");}
 	public static String matrix_4x4_3Component_Bruecken()      {return new String(       "Brücken = {[2,3]}\n");}
 	public static String matrix_4x4_3Component_Artikulationen(){return new String("Artikulationen = {}\n") ;}
 	
@@ -161,9 +161,9 @@ public class TestMatrices
 						{0,0,1,0,0,0,0,0},
 						{0,0,0,1,0,0,0,1},
 						{0,0,0,0,0,0,1,0}};}
-	public static String matrix_8x8_3Component_durchmesser()   {return new String(      "diameter = n\\a\n");}
-	public static String matrix_8x8_3Component_radius()        {return new String(        "radius = n\\a\n");}
-	public static String matrix_8x8_3Component_Zentrum()       {return new String(        "centre = n\\a\n");}
+	public static String matrix_8x8_3Component_durchmesser()   {return new String(      "diameter = non sequitur\n");}
+	public static String matrix_8x8_3Component_radius()        {return new String(        "radius = non sequitur\n");}
+	public static String matrix_8x8_3Component_Zentrum()       {return new String(        "centre = non sequitur\n");}
 	public static String matrix_8x8_3Component_Bruecken()      {return new String(       "Brücken = {[3,6],[4,7],[7,8]}\n");}
 	public static String matrix_8x8_3Component_Artikulationen(){return new String("Artikulationen = {4,7}\n") ;}
 	
