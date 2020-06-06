@@ -84,6 +84,17 @@ public class Graph
 	{
 		this.adjacencyMatrix = adjacencyMatrix;
 	}
+	public void setAdjacencyMatrix(AdjacencyMatrix adjacencyMatrix, boolean setAll) throws MatrixException, GraphException 
+	{
+		this.adjacencyMatrix = adjacencyMatrix;
+		if (setAll)
+		{
+			setDistanztrix();
+			setReachAbilityMatrix();
+			setCutVertices();
+			setBridges();
+		}
+	}
 	public void setDistanztrix() throws MatrixException 
 	{
 		distanceMatrix = new DistanceMatrix(adjacencyMatrix);
@@ -189,7 +200,7 @@ public class Graph
 		else
 			throw new GraphException("null-Ref für loadMitarbeiter(String filename)");
 	}
-	public void importMatrixCsv(String filename, String delimiter) throws GraphException, MatrixException
+	public void importMatrixCsv(String filename, String delimiter, boolean setAll) throws GraphException, MatrixException
 	{
 		try (BufferedReader br = new BufferedReader(new FileReader(filename));)
 		{
@@ -219,7 +230,7 @@ public class Graph
 				}
 				l++;
 			}
-			adjacencyMatrix = new AdjacencyMatrix(aMatrix);
+			setAdjacencyMatrix(new AdjacencyMatrix(aMatrix), setAll);
 		}
 		catch (FileNotFoundException e)
 		{

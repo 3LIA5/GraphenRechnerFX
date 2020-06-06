@@ -18,8 +18,10 @@ public class RootBorderPane extends BorderPane
 	private MenuBar menuBar;
 	private Menu mDatei, mBerechnen, mAnsicht, mMatrix, mEigenschaften, mHilfe;
 	private MenuItem miNeu, miLaden, miSpeichern, miImportAdjazensmatrixCsv, miExportieren, miBeenden,
-					 miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten,
-					 miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht, miUeber;
+					 miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht,
+					 miViewRadiusDiameterCentre, miViewCutVertices, miViewBridges, miViewComponents, miViewAll,
+					 miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten,  
+					 miUeber;
 	private Graph graph;
 	private TextArea viewMatrix;
 	private TextArea viewStats;
@@ -52,19 +54,23 @@ public class RootBorderPane extends BorderPane
 		miExportieren = new MenuItem("csv Export");
 		miBeenden = new MenuItem("Beenden");
 		
-		mMatrix  = new Menu("Matrix");
+		
 		miDistanzmatrix = new MenuItem("Distanzmatrix");
 		miWegmatrix = new MenuItem("Wegmatrix");
 		miArtikulationen = new MenuItem("Artikulationen");
 		miBruecken = new MenuItem("Bruecken");
 		miKomponenten = new MenuItem("Komponenten");
 
-		
-		miAdjazensmatrixAnsicht = new MenuItem("Adjazensmatrix");
-		miDistanzmatrixAnsicht = new MenuItem("Distanzmatrix");
-		miWegmatrixAnsicht = new MenuItem("Wegmatrix");
+		mMatrix  = new Menu("Matrix");
+			miAdjazensmatrixAnsicht = new MenuItem("Adjazensmatrix");
+			miDistanzmatrixAnsicht = new MenuItem("Distanzmatrix");
+			miWegmatrixAnsicht = new MenuItem("Wegmatrix");
 		mEigenschaften = new Menu("Eigenschaften");
-		
+			miViewRadiusDiameterCentre = new MenuItem("Radius, Durchmesser, Zentrum");
+			miViewCutVertices = new MenuItem("Artikulationen");
+			miViewBridges = new MenuItem("Brücken");
+			miViewComponents = new MenuItem("Komponenten");
+			miViewAll = new MenuItem("Alle");
 		miUeber = new MenuItem("Über");
 		
 		viewMatrix = new TextArea();
@@ -91,6 +97,7 @@ public class RootBorderPane extends BorderPane
 		mBerechnen.getItems().addAll(miDistanzmatrix, miWegmatrix, miArtikulationen, miBruecken, miKomponenten);
 		mAnsicht.getItems().addAll(mMatrix, mEigenschaften);
 			mMatrix.getItems().addAll(miAdjazensmatrixAnsicht, miDistanzmatrixAnsicht, miWegmatrixAnsicht);
+			mEigenschaften.getItems().addAll(miViewRadiusDiameterCentre, miViewCutVertices, miViewBridges, miViewComponents, miViewAll);
 		mHilfe.getItems().addAll(miUeber);
 		
 		setCenter(viewMatrix);
@@ -106,23 +113,21 @@ public class RootBorderPane extends BorderPane
 		miWegmatrix.setOnAction(event -> berechneWegmatrix());
 		miBeenden.setOnAction( event -> beenden() );
 		miUeber.setOnAction(event -> ueber() );	
-		
+		miViewRadiusDiameterCentre.setOnAction(event -> viewRadiusDiameterCentre()); 
+		miViewCutVertices.setOnAction(event -> viewCutVertices()); 
+		miViewBridges.setOnAction(event -> viewBridges()); 
+		miViewComponents.setOnAction(event -> viewComponents());
+		miViewAll.setOnAction(event -> viewAll());
 	}
 	
 	public void disableComponents(boolean disabled)
 	{
 		mMatrix.setDisable(disabled);
 		mEigenschaften.setDisable(disabled);
-		miExportieren.setDisable(disabled);
-		
+		miExportieren.setDisable(disabled);		
 	}
 //-------------------------------------- Handler-Methoden ---------------------------	
-	private void viewMatrix(Matrix matrix)
-	{
-		if (matrix==null)
-			viewMatrix.setText("\n - matrix not available -");
-		viewMatrix.setText(matrix.toString());
-	}
+
 	private void importAdjazensmatrixCsv()
 	{
 		FileChooser fc = new FileChooser();
@@ -132,9 +137,9 @@ public class RootBorderPane extends BorderPane
 		{
 			try
 			{
-				graph.importMatrixCsv(selected.getAbsolutePath(),",");
+				graph.importMatrixCsv(selected.getAbsolutePath(),",",true);
 				viewMatrix(graph.getAdjazensmatirx());
-//				disableComponents(false);
+				disableComponents(false);
 			}
 			catch (GraphException e)
 			{
@@ -148,6 +153,55 @@ public class RootBorderPane extends BorderPane
 		else
 			Main.showAlert(AlertType.INFORMATION, "Benutzer-Abbruch");
 	}
+
+	private void viewMatrix(Matrix matrix)
+	{
+		if (matrix==null)
+			viewMatrix.setText("\n - matrix not available -");
+		viewMatrix.setText(matrix.toString());
+	}
+	private void viewRadiusDiameterCentre()
+	{
+		viewMatrix.setText(graph.toStringRadius());
+		viewMatrix.appendText(graph.toStringDiameter());
+		viewMatrix.appendText(graph.toStringCentre());
+	}
+	private void viewCutVertices()
+	{
+		viewMatrix.setText(graph.toStringCutVertices());
+	}
+	private void viewBridges()
+	{
+		viewMatrix.setText(graph.toStringBridges());
+	}
+	private void viewComponents()
+	{
+		try
+		{
+			viewMatrix.setText(graph.toStringComponents());
+		} 
+		catch (MatrixException e) 
+		{
+			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+		}
+	}
+	private void viewAll()
+	{
+		try
+		{
+			viewMatrix.setText(graph.toStringRadius());
+			viewMatrix.appendText(graph.toStringDiameter());
+			viewMatrix.appendText(graph.toStringCentre());
+			viewMatrix.appendText(graph.toStringCutVertices());
+			viewMatrix.appendText(graph.toStringBridges());
+			viewMatrix.appendText(graph.toStringComponents());
+		} 		
+		catch (MatrixException e) 
+		{
+			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
+		}
+	}
+
 	private void berechneDistanzmatrix()
 	{
 		try 
