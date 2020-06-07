@@ -42,6 +42,11 @@ public class ReachAbilityMatrix extends Matrix
 					changed=true;
 					nodes--;
 				}
+				/*for testing Start*/
+//				System.out.println(" line: "+line+" column: "+column+" nodes: "+nodes);
+//				for(int i:components)System.out.print(" "+i);
+//				System.out.print('\n');
+				/*for testing End*/
 			}
 			line++;
 		}	

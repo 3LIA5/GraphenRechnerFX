@@ -23,10 +23,10 @@ public class TestReachAbilityMatrix
 //		else
 //			System.out.println("Errors not detected: "+(flawedMatrices.size()-count+1));
 		
-		System.out.println("test calculateDistanceMatrix()");	
+
 		try
 		{
-			System.out.println("TestMatrices.matrix_4x4_1Component()");
+			System.out.println("--TestMatrices.matrix_4x4_1Component()");
 			ReachAbilityMatrix rm = new ReachAbilityMatrix(new DistanceMatrix(new AdjacencyMatrix(TestMatrices.matrix_4x4_1Component()).calculateDistanceMatrix()));
 			boolean equals=true;
 			for (int length=0; length<rm.getMatrix().length; length++)
@@ -39,10 +39,11 @@ public class TestReachAbilityMatrix
 				System.out.print(rm.getComponents()[i]+" ");
 			System.out.println('\n');
 		}catch (MatrixException e){System.out.println(e.getMessage());}
-		System.out.println("test calculateDistanceMatrix()");	
+		
+
 		try
 		{
-			System.out.println("TestMatrices.matrix_4x4_3Component()");
+			System.out.println("--TestMatrices.matrix_4x4_3Component()");
 			ReachAbilityMatrix rm = new ReachAbilityMatrix(new DistanceMatrix(new AdjacencyMatrix(TestMatrices.matrix_4x4_3Component()).calculateDistanceMatrix()));
 			System.out.println("components : "+rm.getComponents()[rm.getComponents().length-1]);
 			for (int i=0; i<rm.getComponents().length; i++)

@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
 
@@ -24,7 +25,7 @@ public class RootBorderPane extends BorderPane
 					 miUeber;
 	private Graph graph;
 	private TextArea textAreaCenter;
-	private TextArea viewStats;
+	private Text viewStats;
 	
 	public RootBorderPane()
 	{
@@ -76,8 +77,8 @@ public class RootBorderPane extends BorderPane
 		textAreaCenter = new TextArea();
 			textAreaCenter.setFont(Font.font("Consolas", 12));
 			textAreaCenter.setEditable(false);
-//		viewStats = new TextArea();
-//			viewStats.setFont(Font.font("Consolas", 12));
+		viewStats = new Text();
+			viewStats.setFont(Font.font("Consolas", 9));
 //			viewStats.setEditable(false);
 //			viewStats.setVisible(false);
 //			viewStats.prefWidthProperty().bind(this.widthProperty());
@@ -101,7 +102,7 @@ public class RootBorderPane extends BorderPane
 		mHilfe.getItems().addAll(miUeber);
 		
 		setCenter(textAreaCenter);
-		setLeft(viewStats);
+		setBottom(viewStats);
 	}
 	private void addHandlers()
 	{
@@ -137,6 +138,7 @@ public class RootBorderPane extends BorderPane
 		{
 			try
 			{
+				long start = System.nanoTime();
 				graph.importMatrixCsv(selected.getAbsolutePath(),",",true);
 //				textAreaCenter.setText("** calculating distance matrix\n");
 //				graph.setDistanztrix();
@@ -148,6 +150,9 @@ public class RootBorderPane extends BorderPane
 //				graph.setBridges();
 				viewMatrix(graph.getAdjazensmatirx());
 				disableComponents(false);
+				long need = (System.nanoTime() - start) / 1000000;
+				viewStats.setText(new String("time to calculate:" +need+"mS"));
+				
 			}
 			catch (GraphException e)
 			{
@@ -216,9 +221,9 @@ public class RootBorderPane extends BorderPane
 		{
 			graph.setDistanztrix();
 			viewMatrix(graph.getDistanceMatrix());
-			viewStats.appendText(graph.toStringRadius());
-			viewStats.appendText(graph.toStringDiameter());
-			viewStats.appendText(graph.toStringCentre());
+			textAreaCenter.appendText(graph.toStringRadius());
+			textAreaCenter.appendText(graph.toStringDiameter());
+			textAreaCenter.appendText(graph.toStringCentre());
 		} 
 		catch (MatrixException e) 
 		{
@@ -231,7 +236,7 @@ public class RootBorderPane extends BorderPane
 		{
 			graph.setReachAbilityMatrix();
 			viewMatrix(graph.getReachabilityMatrix());
-			viewStats.appendText(graph.toStringComponents());
+			textAreaCenter.appendText(graph.toStringComponents());
 		} 
 		catch (MatrixException e) 
 		{
