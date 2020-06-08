@@ -325,7 +325,7 @@ public class TestMatrices
 		{
 			String prefix = "";
 			sb.append(String.format("%-"+digitsLength+"d:",line+1));
-			for (int column=0; column<length;column++)
+			for (int column=0; column<matrix[line].length;column++)
 			{
 				sb.append(String.format("%s%d",prefix, matrix[line][column]));
 				prefix=",";

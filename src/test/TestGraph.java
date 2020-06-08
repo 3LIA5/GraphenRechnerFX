@@ -105,7 +105,7 @@ public class TestGraph
 			System.out.println("Artikulationen :"+(gr.toStringCutVertices().equals(TestMatrices.matrix_26x26_C_Artikulationen())?"ok":"NOT OK!!"));
 			System.out.println("       Brücken :"+(gr.toStringBridges().equals    (TestMatrices.matrix_26x26_C_Bruecken())?"ok":"NOT OK!!"));
 			System.out.print(gr.getReachabilityMatrix().getComponents()[gr.getReachabilityMatrix().getMatrix().length]+" Components: \n"+gr.toStringComponents());
-			gr.exportAdjazensmatirxCsv("c:\\scratch\\"+gr.getName()+".csv");
+//			gr.exportAdjazensmatirxCsv("c:\\scratch\\"+gr.getName()+".csv");
 		} catch (Exception e){System.out.println(e.getMessage());}
 		
 //	try {System.out.println(                                              "\n--TestMatrices.matrix_line(140)--");

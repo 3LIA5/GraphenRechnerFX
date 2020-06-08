@@ -66,6 +66,27 @@ public class TestAdjacencyMatrix
 				System.out.println((i)+" = "+aM.toStringEdgesOfVortexTo(i));			
 		}catch (MatrixException e){System.out.println(e.getMessage());}
 
+		
+		try{
+			System.out.println("||||||||||||||||| speed Test |||||||||||||||||");
+			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_random_line(200));
+			long start = System.nanoTime();
+			int [][] dM = aM.calculateDistanceMatrix();
+			System.out.println(new String("time to calculate:" +(System.nanoTime()-start)/1000000+"ms"));
+		}catch (MatrixException e){System.out.println(e.getMessage());}
+		
+		//test new caLCULATION
+//		try{
+//			AdjacencyMatrix aM = new AdjacencyMatrix(TestMatrices.matrix_4x4_1Component());
+//			boolean equals=true;
+//			if(toStringCsv(aM.calculateDistanceMatrix()).equals(toStringCsv(aM.calculateDistanceMatrix_v2())))
+//				System.out.println("new calculation is ok");
+//			else
+//				System.out.println("new calculation is Ok");
+//			System.out.println(toStringCsv(aM.calculateDistanceMatrix_v2()));
+//			System.out.println(toStringCsv(aM.calculateDistanceMatrix()));
+//
+//		}catch (MatrixException e){System.out.println(e.getMessage());}
 
 	}
     public static String toStringCsv(int[][] matrix)
@@ -73,11 +94,11 @@ public class TestAdjacencyMatrix
     	int length = matrix.length;
     	int digitsLength=length<10?1:length<100?2:3;
     	StringBuilder sb = new StringBuilder((length*length)+length);
-		for (int line=0; line<length;line++)
+		for (int line=0; line<matrix.length;line++)
 		{
 			String prefix = "";
 			sb.append(String.format("%-"+digitsLength+"d:",line+1));
-			for (int column=0; column<length;column++)
+			for (int column=0; column<matrix[line].length;column++)
 			{
 				sb.append(String.format("%s%d",prefix, matrix[line][column]));
 				prefix=",";

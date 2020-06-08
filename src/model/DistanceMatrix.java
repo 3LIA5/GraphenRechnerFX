@@ -16,6 +16,12 @@ public class DistanceMatrix extends Matrix
 		super(matrix.calculateDistanceMatrix());
 		calculateSummary();
 	}
+//	public DistanceMatrix(AdjacencyMatrix matrix,boolean simple) throws MatrixException 
+//	{
+//		super(matrix.calculateDistanceMatrix());
+//		if (!simple)
+//			calculateSummary();
+//	}
 //	--------------------------- getter/setter ---------------------------------------
 	public void setMatrix(int[][] matrix) throws MatrixException 
 	{
@@ -41,9 +47,13 @@ public class DistanceMatrix extends Matrix
 		for (int line=0; line<lenght; line++)
 		{
 			for (int column=0; column<lenght; column++)
+//			for (int column=line+1; column<lenght; column++)
 			{
 				if(matrix[line][column]!=0)
+				{
 					reachAbilityMatrix[line][column]=1;
+//					reachAbilityMatrix[column][line]=1;
+				}
 			}
 			reachAbilityMatrix[line][line]=1;
 		}

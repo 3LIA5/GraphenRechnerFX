@@ -13,6 +13,7 @@ public class ReachAbilityMatrix extends Matrix
 	{
 		this(matrix.calculateReachAbilityMatrix());
 	}
+
 //	--------------------------- getter/setter ---------------------------------------
 	public void setMatrix(int[][] matrix) throws MatrixException 
 	{

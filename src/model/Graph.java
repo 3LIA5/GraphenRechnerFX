@@ -268,7 +268,7 @@ public class Graph
 				}
 				
 			}
-			sbComponents.append("C"+component+"= ({").append(sbVortex.toString()).append("},{").append(sbEdges.toString()).append("})\n");
+			sbComponents.append("C"+component+"=({").append(sbVortex.toString()).append("}, {").append(sbEdges.toString()).append("})\n");
 		}
 		return sbComponents.toString();
 	}

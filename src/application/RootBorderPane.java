@@ -169,30 +169,36 @@ public class RootBorderPane extends BorderPane
 
 	private void viewMatrix(Matrix matrix)
 	{
+		textAreaCenter.setWrapText(false);
 		if (matrix==null)
 			textAreaCenter.setText("\n - matrix not available -");
 		textAreaCenter.setText(matrix.toString());
 	}
 	private void viewRadiusDiameterCentre()
 	{
+		textAreaCenter.setWrapText(true);
 		textAreaCenter.setText(graph.toStringRadius());
 		textAreaCenter.appendText(graph.toStringDiameter());
 		textAreaCenter.appendText(graph.toStringCentre());
 	}
 	private void viewCutVertices()
 	{
+		textAreaCenter.setWrapText(true);
+		textAreaCenter.setWrapText(true);
 		textAreaCenter.setText(graph.toStringCutVertices());
 	}
 	private void viewBridges()
 	{
+		textAreaCenter.setWrapText(true);
 		textAreaCenter.setText(graph.toStringBridges());
 	}
 	private void viewComponents()
 	{
 		try
 		{
+			textAreaCenter.setWrapText(true);
 			textAreaCenter.setText(graph.toStringComponents());
-		} 
+		}
 		catch (MatrixException e) 
 		{
 			Main.showAlert(AlertType.ERROR, e.getMessage()+"\n"+e.getClass().getSimpleName());
@@ -202,6 +208,7 @@ public class RootBorderPane extends BorderPane
 	{
 		try
 		{
+			textAreaCenter.setWrapText(true);
 			textAreaCenter.setText(graph.toStringRadius());
 			textAreaCenter.appendText(graph.toStringDiameter());
 			textAreaCenter.appendText(graph.toStringCentre());
