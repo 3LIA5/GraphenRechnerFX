@@ -108,9 +108,9 @@ public class TestGraph
 //			gr.exportAdjazensmatirxCsv("c:\\scratch\\"+gr.getName()+".csv");
 		} catch (Exception e){System.out.println(e.getMessage());}
 		
-//	try {System.out.println(                                              "\n--TestMatrices.matrix_line(140)--");
-//		Graph gr = new Graph(                                                              "matrix_line_140");
-//		gr.setAdjacencyMatrix(                             new AdjacencyMatrix(TestMatrices.matrix_line(140)));
+//	try {System.out.println(                                              "\n--TestMatrices.matrix_line(200)--");
+//		Graph gr = new Graph(                                                              "matrix_line_200");
+//		gr.setAdjacencyMatrix(                             new AdjacencyMatrix(TestMatrices.matrix_line(200)));
 //		gr.exportAdjazensmatirxCsv("c:\\scratch\\"+gr.getName()+".csv");
 //	} catch (Exception e){System.out.println(e.getMessage());}
 //		

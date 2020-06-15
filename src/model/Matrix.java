@@ -87,7 +87,7 @@ public abstract class Matrix implements Serializable
 			for (int column=0; column<length;column++)
 			{
 				sb.append(String.format("%s%d",prefix, matrix[line][column]));
-				prefix=",";
+				prefix=";";
 			}
 			if(line!=length-1)
 				sb.append('\n');
